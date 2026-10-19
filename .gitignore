@@ -4,3 +4,8 @@ node_modules/
 *.tsbuildinfo
 .env*
 !.env.example
+logs/
+tmp/
+.env.*
+!.env.example
+!.env.*.example

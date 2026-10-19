@@ -76,3 +76,61 @@ button:disabled {
 [role="alert"] {
   color: #a51d25;
 }
+nav {
+  display: flex;
+  gap: 24px;
+  padding: 20px 24px;
+  background: white;
+  border-bottom: 1px solid #ccd3df;
+}
+a {
+  color: #245dcc;
+}
+input {
+  padding: 12px;
+  border: 1px solid #ccd3df;
+  border-radius: 8px;
+  font: inherit;
+  width: 100%;
+}
+.result {
+  margin-top: 32px;
+  padding: 24px;
+  background: white;
+  border: 1px solid #ccd3df;
+  border-radius: 12px;
+}
+dt {
+  font-weight: bold;
+  margin-top: 16px;
+}
+dd {
+  margin: 6px 0;
+  overflow-wrap: anywhere;
+}
+.explanation {
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+.admin {
+  max-width: 1200px;
+  margin: 32px auto;
+  padding: 24px;
+}
+.table-wrap {
+  overflow-x: auto;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+th,
+td {
+  text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid #ccd3df;
+}
+th {
+  background: #e2edff;
+}

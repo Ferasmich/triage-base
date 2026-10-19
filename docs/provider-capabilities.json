@@ -1,0 +1,20 @@
+{
+  "checked_at": "2026-10-14T10:27:08.550Z",
+  "caveat": "One probe per model. An accepted request does not prove every JSON Schema constraint is enforced upstream; Zod always validates locally.",
+  "rows": [
+    {
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "mode": "json_schema",
+      "status": 200,
+      "result": "Accepted schema request and returned locally validated output",
+      "latency_ms": 2521
+    },
+    {
+      "model": "google/diffusiongemma-26b-a4b-it",
+      "mode": "json_schema",
+      "status": 200,
+      "result": "Accepted schema request and returned locally validated output",
+      "latency_ms": 389
+    }
+  ]
+}

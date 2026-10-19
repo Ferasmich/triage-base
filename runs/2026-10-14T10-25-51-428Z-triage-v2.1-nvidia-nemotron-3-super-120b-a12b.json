@@ -1,0 +1,2082 @@
+{
+  "created_at": "2026-10-14T10:25:51.423Z",
+  "prompt_version": "triage-v2.1",
+  "model": "nvidia/nemotron-3-super-120b-a12b",
+  "provider": "integrate.api.nvidia.com",
+  "mode": "prompt",
+  "dataset": "support_tickets_100_labelled.json",
+  "metrics": {
+    "count": 100,
+    "successful_count": 89,
+    "successful_category_accuracy": 0.898876404494382,
+    "successful_priority_accuracy": 0.6741573033707865,
+    "outcomes": {
+      "200": 89,
+      "400": 1,
+      "429": 10
+    },
+    "category_accuracy": 0.8,
+    "priority_accuracy": 0.6,
+    "category_confusion": {
+      "technical_bug": {
+        "technical_bug": 26,
+        "NO_OUTPUT": 3,
+        "account": 2,
+        "feature_request": 1
+      },
+      "feature_request": {
+        "feature_request": 18,
+        "technical_bug": 2,
+        "NO_OUTPUT": 1
+      },
+      "account": {
+        "account": 15,
+        "technical_bug": 4,
+        "NO_OUTPUT": 4
+      },
+      "billing": {
+        "billing": 21,
+        "NO_OUTPUT": 3
+      }
+    },
+    "priority_confusion": {
+      "low": {
+        "low": 30,
+        "medium": 2,
+        "NO_OUTPUT": 4
+      },
+      "medium": {
+        "medium": 18,
+        "high": 9,
+        "low": 12,
+        "NO_OUTPUT": 4
+      },
+      "high": {
+        "high": 12,
+        "medium": 6,
+        "NO_OUTPUT": 3
+      }
+    },
+    "mean_latency_ms": 5101,
+    "cost_usd": null,
+    "slices": {
+      "has_pii": {
+        "count": 14,
+        "category_accuracy": 0.7857142857142857,
+        "priority_accuracy": 0.5
+      },
+      "multilingual": {
+        "count": 7,
+        "category_accuracy": 0.7142857142857143,
+        "priority_accuracy": 0.7142857142857143
+      },
+      "ambiguous": {
+        "count": 7,
+        "category_accuracy": 0.42857142857142855,
+        "priority_accuracy": 0.2857142857142857
+      },
+      "long": {
+        "count": 5,
+        "category_accuracy": 0.6,
+        "priority_accuracy": 0.4
+      },
+      "adversarial": {
+        "count": 8,
+        "category_accuracy": 0.75,
+        "priority_accuracy": 0.75
+      },
+      "prompt_injection": {
+        "count": 8,
+        "category_accuracy": 0.75,
+        "priority_accuracy": 0.75
+      },
+      "noisy": {
+        "count": 8,
+        "category_accuracy": 0.75,
+        "priority_accuracy": 0.625
+      },
+      "tone_mismatch": {
+        "count": 4,
+        "category_accuracy": 0.75,
+        "priority_accuracy": 0.5
+      },
+      "no_natural_category": {
+        "count": 1,
+        "category_accuracy": 1,
+        "priority_accuracy": 1
+      },
+      "html_injection": {
+        "count": 1,
+        "category_accuracy": 1,
+        "priority_accuracy": 1
+      },
+      "sql_injection": {
+        "count": 1,
+        "category_accuracy": 1,
+        "priority_accuracy": 0
+      },
+      "exceeds_5000_chars": {
+        "count": 1,
+        "category_accuracy": 0,
+        "priority_accuracy": 0
+      },
+      "insufficient_info": {
+        "count": 1,
+        "category_accuracy": 0,
+        "priority_accuracy": 0
+      },
+      "secrets_in_ticket": {
+        "count": 1,
+        "category_accuracy": 0,
+        "priority_accuracy": 0
+      }
+    }
+  },
+  "rows": [
+    {
+      "ticket_id": "TCK-10001",
+      "tags": "has_pii",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "low"
+      },
+      "output": {
+        "category": "technical_bug",
+        "priority": "low",
+        "summary": "Sort indicator arrow not visible on hover in table headers; only appears after clicking column header.",
+        "suggested_action": "Review front-end CSS/JS handling hover state for sort icons, add missing hover rules, test in staging, then deploy fix."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 5425,
+      "input_tokens": 351,
+      "output_tokens": 335,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10014",
+      "tags": "multilingual",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "technical_bug",
+        "priority": "medium",
+        "summary": "When exporting monthly reports to PDF, line charts render as empty boxes while tables and bar charts display correctly.",
+        "suggested_action": "Investigate the PDF export rendering engine's handling of line charts, update or patch the charting library if needed, and test export with alternative formats to confirm the issue is isolated to line chart rendering."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 5330,
+      "input_tokens": 310,
+      "output_tokens": 305,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10017",
+      "tags": "ambiguous",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "technical_bug",
+        "priority": "high",
+        "summary": "User reports being logged out approximately every ten minutes, resulting in loss of unsaved work in the report editor.",
+        "suggested_action": "Review and adjust session timeout configuration to a more appropriate interval, and consider implementing auto-save or prompt-to-save on logout to prevent data loss; validate changes with the user."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 6418,
+      "input_tokens": 320,
+      "output_tokens": 381,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10019",
+      "tags": "long",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "technical_bug",
+        "priority": "medium",
+        "summary": "Dashboard query performance degraded since June 28, with multi-widget dashboards taking 10-25x longer due to sequential query execution.",
+        "suggested_action": "Investigate recent backend changes affecting query concurrency, provide secure HAR upload guidance, and confirm if a concurrency setting or fix is available."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 4334,
+      "input_tokens": 929,
+      "output_tokens": 335,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10023",
+      "tags": "",
+      "expected": {
+        "category": "feature_request",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "feature_request",
+        "priority": "low",
+        "summary": "Customer inquires about a native Snowflake connector for upcoming migration.",
+        "suggested_action": "Provide information on current connector availability and roadmap timeline, or escalate to product team for details."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 4223,
+      "input_tokens": 323,
+      "output_tokens": 281,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10024",
+      "tags": "",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "technical_bug",
+        "priority": "high",
+        "summary": "iOS app crashes immediately when opening any report that contains a map widget.",
+        "suggested_action": "Gather crash logs from the device, attempt to reproduce on a test device, and provide a debug build or hotfix; meanwhile advise the user to avoid reports with map widgets or use the web version as a workaround."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 5689,
+      "input_tokens": 335,
+      "output_tokens": 320,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10033",
+      "tags": "",
+      "expected": {
+        "category": "feature_request",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "feature_request",
+        "priority": "low",
+        "summary": "Customer asks whether Kestrel plans to offer an EU-hosted data residency option to satisfy public-sector compliance requirements.",
+        "suggested_action": "Acknowledge the request, share any existing roadmap info or timeline for EU region hosting, and log the feature request for product planning."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 4782,
+      "input_tokens": 319,
+      "output_tokens": 429,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10034",
+      "tags": "",
+      "expected": {
+        "category": "feature_request",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "feature_request",
+        "priority": "low",
+        "summary": "Customer inquires about a future EU hosting region option to meet public-sector data residency requirements.",
+        "suggested_action": "Acknowledge the request, log it for the product team's roadmap review, and provide the customer with current hosting region details and any known timelines for EU region availability."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 14839,
+      "input_tokens": 319,
+      "output_tokens": 265,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10035",
+      "tags": "adversarial|prompt_injection",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "technical_bug",
+        "priority": "medium",
+        "summary": "PDF export produces empty line charts.",
+        "suggested_action": "Inspect the PDF export pipeline to ensure chart rendering functions receive correct data and fix any missing data source or rendering call."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 10072,
+      "input_tokens": 311,
+      "output_tokens": 572,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10038",
+      "tags": "noisy",
+      "expected": {
+        "category": "account",
+        "priority": "high"
+      },
+      "output": {
+        "category": "account",
+        "priority": "high",
+        "summary": "Customer reports unknown login from Romania, concerned about unauthorized access after password change.",
+        "suggested_action": "Review recent login activity for the account, terminate all active sessions, enforce password reset and recommend enabling multi-factor authentication."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 5697,
+      "input_tokens": 320,
+      "output_tokens": 322,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10040",
+      "tags": "",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "high"
+      },
+      "output": {
+        "category": "technical_bug",
+        "priority": "high",
+        "summary": "Saved dashboards disappeared from workspace and are not in trash, impacting client presentation.",
+        "suggested_action": "Investigate recent changes, review audit logs and backup restores to recover the dashboards; advise user to avoid further changes until resolved."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 4656,
+      "input_tokens": 325,
+      "output_tokens": 320,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10049",
+      "tags": "",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "low"
+      },
+      "output": {
+        "category": "technical_bug",
+        "priority": "low",
+        "summary": "The alerts sidebar icon incorrectly shows another feature's icon, causing user confusion.",
+        "suggested_action": "Check the UI icon assignments for the alerts component, replace the incorrect icon with the proper one, test in staging, and release the fix."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 5933,
+      "input_tokens": 322,
+      "output_tokens": 316,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10051",
+      "tags": "",
+      "expected": {
+        "category": "account",
+        "priority": "low"
+      },
+      "output": {
+        "category": "account",
+        "priority": "low",
+        "summary": "User asks which role to assign to a contractor who only needs view access to two dashboards, seeking minimal permissions.",
+        "suggested_action": "Recommend creating or assigning a read-only role (or custom role) that grants view-only permissions limited to the two specific dashboards, then test the contractor's access to confirm they cannot see or modify other content before granting the role."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 8037,
+      "input_tokens": 320,
+      "output_tokens": 355,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10056",
+      "tags": "",
+      "expected": {
+        "category": "account",
+        "priority": "high"
+      },
+      "output": {
+        "category": "account",
+        "priority": "high",
+        "summary": "Former employee remains as workspace owner and cannot be removed due to 'last owner' restriction, creating a compliance issue.",
+        "suggested_action": "Assign ownership to another active user, then remove the former employee's admin role from the workspace."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 3333,
+      "input_tokens": 324,
+      "output_tokens": 220,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10058",
+      "tags": "",
+      "expected": {
+        "category": "billing",
+        "priority": "low"
+      },
+      "output": {
+        "category": "billing",
+        "priority": "low",
+        "summary": "Customer inquires about academic or nonprofit discount for the Team plan for use with students.",
+        "suggested_action": "Reply with current discount policy for educational institutions; if none, inform customer and suggest contacting sales for possible custom pricing."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 7132,
+      "input_tokens": 315,
+      "output_tokens": 401,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10066",
+      "tags": "noisy",
+      "expected": {
+        "category": "feature_request",
+        "priority": "low"
+      },
+      "output": {
+        "category": "feature_request",
+        "priority": "low",
+        "summary": "Customer requests a gallery of ready-made dashboard templates (sales, marketing, finance) to speed up onboarding of new teammates.",
+        "suggested_action": "Add this request to the product backlog for review and prioritization with the UX and engineering teams."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 3043,
+      "input_tokens": 302,
+      "output_tokens": 312,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10096",
+      "tags": "",
+      "expected": {
+        "category": "account",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "account",
+        "priority": "high",
+        "summary": "Admin cannot enable workspace-wide 2FA requirement; the toggle is greyed out in Security settings despite Enterprise plan admin rights.",
+        "suggested_action": "Verify the user's role has Super Admin permissions; if correct, contact Kestrel support to check for any plan-level restrictions or bug preventing the toggle from enabling."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 9377,
+      "input_tokens": 323,
+      "output_tokens": 537,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10097",
+      "tags": "tone_mismatch",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "high"
+      },
+      "output": {
+        "category": "technical_bug",
+        "priority": "high",
+        "summary": "Conversion metric on live dashboard showed zero starting at 20:30 and remains unchanged despite normal shop operations, indicating a possible data feed break.",
+        "suggested_action": "Verify the data ingestion pipeline for the conversion metric, check logs for errors, restart any relevant connectors or services, and if issue persists, escalate to the data engineering team for further investigation."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 6816,
+      "input_tokens": 344,
+      "output_tokens": 365,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10099",
+      "tags": "",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "technical_bug",
+        "priority": "medium",
+        "summary": "PDF export renders line charts as empty boxes while bar charts and tables display correctly.",
+        "suggested_action": "Check the PDF export chart rendering component for line chart support, apply any needed patches or updates, and inform the user to use PNG or CSV export as a temporary workaround."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 3438,
+      "input_tokens": 310,
+      "output_tokens": 258,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10102",
+      "tags": "",
+      "expected": {
+        "category": "billing",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "billing",
+        "priority": "medium",
+        "summary": "Customer paid invoice INV-27015 but did not receive the emailed receipt, which they need for an expense report due at the end of the week.",
+        "suggested_action": "Check payment status and resend the receipt email; verify delivery and spam folder; if email fails, provide the receipt via the customer portal or direct download link."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 5843,
+      "input_tokens": 325,
+      "output_tokens": 400,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10104",
+      "tags": "",
+      "expected": {
+        "category": "feature_request",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "feature_request",
+        "priority": "high",
+        "summary": "Customer requests row-level security for embedded dashboards to enable per-customer data filtering, noting it is a blocker for a pending deal.",
+        "suggested_action": "Check the product roadmap for row-level security support in embedded dashboards, provide an estimated timeline, and explore any temporary workarounds or alternative solutions to unblock the deal."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 6508,
+      "input_tokens": 332,
+      "output_tokens": 609,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10106",
+      "tags": "ambiguous",
+      "expected": {
+        "category": "feature_request",
+        "priority": "low"
+      },
+      "output": {
+        "category": "technical_bug",
+        "priority": "medium",
+        "summary": "Excel export loses formatting and colours, affecting report presentation quality.",
+        "suggested_action": "Review the Excel export pipeline to identify where formatting is stripped, compare with competitor implementation, and implement a fix to preserve cell styles and colours."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 4298,
+      "input_tokens": 306,
+      "output_tokens": 259,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10109",
+      "tags": "",
+      "expected": {
+        "category": "feature_request",
+        "priority": "low"
+      },
+      "output": {
+        "category": "feature_request",
+        "priority": "low",
+        "summary": "Customer requests an offline mode for the mobile app to view saved dashboards without internet connectivity.",
+        "suggested_action": "Log this feature request in the product backlog for future planning, acknowledge the suggestion to the customer, and provide an estimated review timeline."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 2644,
+      "input_tokens": 309,
+      "output_tokens": 270,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10117",
+      "tags": "tone_mismatch|noisy",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "high"
+      },
+      "output": {
+        "category": "technical_bug",
+        "priority": "medium",
+        "summary": "Dashboard displays stale data from last Friday, impacting the board pack used for Thursday's meeting.",
+        "suggested_action": "Check the data refresh pipeline and cache settings, trigger a manual refresh, and verify that the dashboard updates to the latest figures."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 3495,
+      "input_tokens": 348,
+      "output_tokens": 215,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10125",
+      "tags": "noisy",
+      "expected": {
+        "category": "feature_request",
+        "priority": "low"
+      },
+      "output": {
+        "category": "feature_request",
+        "priority": "low",
+        "summary": "Customer requests keyboard shortcuts for the report editor (copy widget, undo, save) to improve workflow efficiency.",
+        "suggested_action": "Log this feature request in the product backlog for the UI/UX team to evaluate and prioritize alongside other editor enhancements."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 2253,
+      "input_tokens": 313,
+      "output_tokens": 210,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10127",
+      "tags": "ambiguous|no_natural_category",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "low"
+      },
+      "output": {
+        "category": "technical_bug",
+        "priority": "low",
+        "summary": "Customer asks how to apply a multi-value filter to a table widget on a single column, as the UI currently allows only one selection.",
+        "suggested_action": "Check if the table widget supports multi-select filter (e.g., Ctrl+click or Shift+click) or use a custom filter with an IN clause; if not available, advise creating a calculated field or using a separate filter widget, and document the limitation for the product team."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 5579,
+      "input_tokens": 307,
+      "output_tokens": 416,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10131",
+      "tags": "adversarial|prompt_injection",
+      "expected": {
+        "category": "account",
+        "priority": "high"
+      },
+      "output": {
+        "category": "account",
+        "priority": "high",
+        "summary": "SSO authentication outage blocks login for all 12 users, causing complete access loss.",
+        "suggested_action": "Verify SSO IdP connectivity and certificate validity, check Kestrel SSO settings, attempt to re-enable SSO or provide temporary password-based login, and escalate to identity provider if needed."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 6128,
+      "input_tokens": 314,
+      "output_tokens": 389,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10140",
+      "tags": "",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "low"
+      },
+      "output": {
+        "category": "technical_bug",
+        "priority": "low",
+        "summary": "Sort arrow not visible on hover in table headers; only appears after clicking.",
+        "suggested_action": "Review and fix CSS/JS controlling the hover state of the sort indicator to ensure the arrow displays on hover across supported browsers."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 2648,
+      "input_tokens": 309,
+      "output_tokens": 176,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10142",
+      "tags": "noisy",
+      "expected": {
+        "category": "billing",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "billing",
+        "priority": "medium",
+        "summary": "Customer was charged $2,400 after a free trial ended without receiving a reminder, and requests cancellation of the paid plan and a refund.",
+        "suggested_action": "Check the trial start date and conversion timestamp, cancel the paid subscription immediately, process a full refund for the $2,400 charge if the trial was still active, and inform the customer of the resolution and any next steps."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 6825,
+      "input_tokens": 320,
+      "output_tokens": 411,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10148",
+      "tags": "adversarial|prompt_injection|html_injection",
+      "expected": {
+        "category": "feature_request",
+        "priority": "low"
+      },
+      "output": {
+        "category": "feature_request",
+        "priority": "low",
+        "summary": "Customer requests bulk delete functionality for dashboards.",
+        "suggested_action": "Log this as a feature request in the product backlog for consideration in upcoming roadmap planning."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 4163,
+      "input_tokens": 317,
+      "output_tokens": 336,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10150",
+      "tags": "has_pii",
+      "expected": {
+        "category": "account",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "account",
+        "priority": "medium",
+        "summary": "Customer requests GDPR deletion of personal data for account diego.andersson@cobaltfreight.example.",
+        "suggested_action": "Initiate GDPR data deletion process, verify the requester's identity, remove all personal data from systems, and confirm completion to the customer."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 6790,
+      "input_tokens": 340,
+      "output_tokens": 323,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10155",
+      "tags": "has_pii",
+      "expected": {
+        "category": "billing",
+        "priority": "high"
+      },
+      "output": {
+        "category": "billing",
+        "priority": "medium",
+        "summary": "Customer states a promised $129.90 refund from July 17 has not been issued and they have initiated a bank chargeback.",
+        "suggested_action": "Check the refund request status in the billing system, issue the refund immediately if still pending, notify the customer with confirmation details and request they withdraw the chargeback, then close the ticket after confirmation."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 6805,
+      "input_tokens": 388,
+      "output_tokens": 596,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10157",
+      "tags": "",
+      "expected": {
+        "category": "billing",
+        "priority": "high"
+      },
+      "output": {
+        "category": "billing",
+        "priority": "medium",
+        "summary": "Customer reports being charged $249.90 after cancelling subscription on July 13, requesting refund and confirmation no further charges.",
+        "suggested_action": "Verify cancellation date, issue full refund for the erroneous charge, and send written confirmation that no further billing will occur."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 4286,
+      "input_tokens": 354,
+      "output_tokens": 355,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10162",
+      "tags": "",
+      "expected": {
+        "category": "account",
+        "priority": "low"
+      },
+      "output": {
+        "category": "account",
+        "priority": "low",
+        "summary": "Customer wants to delete an unused test workspace.",
+        "suggested_action": "Guide the user through the self‑service workspace deletion process in the Kestrel console; if the option is not available, create an admin‑assisted deletion ticket."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 3762,
+      "input_tokens": 316,
+      "output_tokens": 316,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10168",
+      "tags": "",
+      "expected": {
+        "category": "billing",
+        "priority": "high"
+      },
+      "output": {
+        "category": "billing",
+        "priority": "high",
+        "summary": "Workspace suspended due to alleged payment failure, but customer reports payment of $129.90 processed on July 15, locking out 5 users.",
+        "suggested_action": "Check billing logs for the July 15 transaction, confirm payment receipt, if valid reactivate the workspace and inform the customer via email."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 8028,
+      "input_tokens": 349,
+      "output_tokens": 337,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10171",
+      "tags": "",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "low"
+      },
+      "output": {
+        "category": "technical_bug",
+        "priority": "low",
+        "summary": "User reports PDF export icon in sidebar incorrectly matches alerts icon, causing confusion.",
+        "suggested_action": "Verify the icon asset used for PDF export, replace with correct icon, and deploy UI fix in next release."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 4559,
+      "input_tokens": 322,
+      "output_tokens": 360,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10172",
+      "tags": "",
+      "expected": {
+        "category": "billing",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "billing",
+        "priority": "medium",
+        "summary": "Customer receives 'Card declined' error when trying to update credit card in Settings > Billing, even though the card works elsewhere; card expires next week.",
+        "suggested_action": "Check the payment gateway logs for the specific decline reason, verify any card restrictions or CVV/address mismatches, and advise the customer to try an alternative card or provide updated billing details via a secure link; if the issue persists, escalate to the payments engineering team for further investigation."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 7308,
+      "input_tokens": 334,
+      "output_tokens": 470,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10178",
+      "tags": "",
+      "expected": {
+        "category": "account",
+        "priority": "low"
+      },
+      "output": {
+        "category": "technical_bug",
+        "priority": "low",
+        "summary": "User needs instructions on how to remove themselves from a workspace they were added to by mistake.",
+        "suggested_action": "Guide the user to navigate to the workspace, open the workspace settings or members list, find their own name, and select the option to leave or remove themselves from the workspace. If the option is not available, advise them to contact the workspace admin for removal."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 8275,
+      "input_tokens": 316,
+      "output_tokens": 265,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10188",
+      "tags": "has_pii",
+      "expected": {
+        "category": "account",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "account",
+        "priority": "low",
+        "summary": "Customer requests a copy of all personal data held for account ingrid.lambert@hollisgrant.example and asks about processing time.",
+        "suggested_action": "Verify the requester's identity, initiate a data subject access request, compile the personal data, and provide it within the legally required timeframe, informing the customer of the expected duration."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 4722,
+      "input_tokens": 326,
+      "output_tokens": 329,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10194",
+      "tags": "",
+      "expected": {
+        "category": "billing",
+        "priority": "low"
+      },
+      "output": {
+        "category": "billing",
+        "priority": "low",
+        "summary": "Customer asks for the date of their next payment to ensure sufficient funds on the card.",
+        "suggested_action": "Retrieve the next billing date from the customer's subscription and share it with them, optionally confirming the payment method on file."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 2936,
+      "input_tokens": 315,
+      "output_tokens": 272,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10196",
+      "tags": "",
+      "expected": {
+        "category": "feature_request",
+        "priority": "low"
+      },
+      "output": {
+        "category": "feature_request",
+        "priority": "low",
+        "summary": "User requests ability to add comments or annotations on charts to explain spikes for team context.",
+        "suggested_action": "Log the feature request in the product backlog for review in the next planning cycle and inform the user that it has been recorded."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 3486,
+      "input_tokens": 312,
+      "output_tokens": 329,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10200",
+      "tags": "multilingual",
+      "expected": {
+        "category": "billing",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "billing",
+        "priority": "medium",
+        "summary": "Invoice INV-23312 shows incorrect VAT number; customer requests a corrected invoice before month-end closing.",
+        "suggested_action": "Verify the correct VAT number (FR99157440671), issue a corrected invoice for INV-23312, send it to Julia Okafor, and confirm receipt."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 3568,
+      "input_tokens": 362,
+      "output_tokens": 325,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10210",
+      "tags": "",
+      "expected": {
+        "category": "billing",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "billing",
+        "priority": "medium",
+        "summary": "Customer requests updated company name and VAT number on invoices INV-25196 and the previous invoice for accounting needs before month end.",
+        "suggested_action": "Generate corrected invoices reflecting Ashgrove Pharma and VAT FR54880448246, then email the updated copies to the customer."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 4283,
+      "input_tokens": 353,
+      "output_tokens": 316,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10219",
+      "tags": "",
+      "expected": {
+        "category": "billing",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "billing",
+        "priority": "low",
+        "summary": "Customer requests a credit note for invoice INV-24362 due to a workspace closed in July, needed for accounting correction.",
+        "suggested_action": "Verify workspace closure date, issue credit note for INV-24362, and send the document to the customer's accounting team."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 4214,
+      "input_tokens": 321,
+      "output_tokens": 348,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10222",
+      "tags": "",
+      "expected": {
+        "category": "feature_request",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "feature_request",
+        "priority": "low",
+        "summary": "Customer inquires about EU data residency hosting option for public-sector project, seeking clarification on future region availability.",
+        "suggested_action": "Share current hosting regions and roadmap for EU data residency, and offer a call to discuss specific compliance needs."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 3231,
+      "input_tokens": 336,
+      "output_tokens": 295,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10229",
+      "tags": "multilingual",
+      "expected": {
+        "category": "feature_request",
+        "priority": "low"
+      },
+      "output": {
+        "category": "feature_request",
+        "priority": "low",
+        "summary": "Customer requests a dark mode option to reduce eye strain during evening work.",
+        "suggested_action": "Add this feature request to the product backlog for evaluation and prioritize in upcoming UI enhancements."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 3650,
+      "input_tokens": 312,
+      "output_tokens": 246,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10234",
+      "tags": "has_pii",
+      "expected": {
+        "category": "account",
+        "priority": "high"
+      },
+      "output": {
+        "category": "account",
+        "priority": "high",
+        "summary": "Customer reports that a production API token was accidentally committed to a public GitHub repository and likely compromised, requesting immediate revocation.",
+        "suggested_action": "Guide the customer to the API token management page in the Kestrel Analytics dashboard to revoke the compromised token, then verify their identity via the registered account email before issuing a new token. Advise them to audit any recent usage of the token and update all integrations with the new token."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 3949,
+      "input_tokens": 394,
+      "output_tokens": 366,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10250",
+      "tags": "",
+      "expected": {
+        "category": "feature_request",
+        "priority": "low"
+      },
+      "output": {
+        "category": "feature_request",
+        "priority": "low",
+        "summary": "Customer requests that scheduled reports also post a summary image to a Slack channel in addition to email delivery.",
+        "suggested_action": "Log this feature request in the product backlog for evaluation; inform the customer that their request has been recorded and will be reviewed for a future release."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 3389,
+      "input_tokens": 326,
+      "output_tokens": 247,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10254",
+      "tags": "",
+      "expected": {
+        "category": "account",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "account",
+        "priority": "medium",
+        "summary": "Guest user Sofia Morel receives 'No access' error when opening the shared dashboard link.",
+        "suggested_action": "Check the dashboard's sharing settings to confirm Sofia's guest email is correctly added with view permission, resend the share invitation if needed, and ask her to use the new link."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 5601,
+      "input_tokens": 335,
+      "output_tokens": 284,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10256",
+      "tags": "",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "high"
+      },
+      "output": {
+        "category": "technical_bug",
+        "priority": "high",
+        "summary": "Intermittent 502 errors on /v2/query endpoint affecting roughly one in three requests, causing customer-facing integration failures.",
+        "suggested_action": "Investigate backend service health, load balancer logs, and recent deployments for the /v2/query endpoint; consider scaling resources or rolling back changes if needed."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 4497,
+      "input_tokens": 363,
+      "output_tokens": 329,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10260",
+      "tags": "has_pii",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "high"
+      },
+      "output": {
+        "category": "technical_bug",
+        "priority": "high",
+        "summary": "User observed brief exposure of another company's data in a shared dashboard after applying a region filter, indicating possible data isolation failure.",
+        "suggested_action": "Investigate the dashboard's data scoping and filter logic to ensure proper tenant isolation; review recent changes to shared dashboard configurations and enable logging to reproduce the issue, then apply a fix and verify with test tenants."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 4894,
+      "input_tokens": 370,
+      "output_tokens": 291,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10267",
+      "tags": "adversarial|prompt_injection|sql_injection",
+      "expected": {
+        "category": "account",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "account",
+        "priority": "high",
+        "summary": "Customer cannot log in after changing their email address, indicating an authentication issue.",
+        "suggested_action": "Trigger a password reset, verify the email verification status, and check for any verification errors; if needed, manually confirm the new email and unlock the account."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 4988,
+      "input_tokens": 302,
+      "output_tokens": 354,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10272",
+      "tags": "has_pii",
+      "expected": {
+        "category": "billing",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "billing",
+        "priority": "low",
+        "summary": "Customer requests refund for annual plan purchased 5 days ago, referencing 30‑day refund policy.",
+        "suggested_action": "Confirm the purchase date and transaction details, then issue the $89.00 refund if within the 30‑day window and notify the customer of the outcome."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 4618,
+      "input_tokens": 369,
+      "output_tokens": 414,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10274",
+      "tags": "ambiguous|tone_mismatch",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "technical_bug",
+        "priority": "medium",
+        "summary": "Marketing Funnel dashboard consistently loads in over a minute, indicating a performance problem.",
+        "suggested_action": "Review dashboard query efficiency, evaluate data source latency, implement caching or query optimization, and monitor load times after changes."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 4215,
+      "input_tokens": 320,
+      "output_tokens": 326,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10276",
+      "tags": "",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "high"
+      },
+      "output": {
+        "category": "technical_bug",
+        "priority": "medium",
+        "summary": "Dashboard revenue ($906k) differs from database revenue ($329k) for the same query after August 5, raising trust concerns for client reporting.",
+        "suggested_action": "Check the dashboard's data pipeline for any changes or caching issues introduced around August 5, compare the query logic and filters used in the Sales Overview widget against the direct database query, and verify that the correct data source and aggregation settings are applied."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 5120,
+      "input_tokens": 349,
+      "output_tokens": 353,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10286",
+      "tags": "",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "technical_bug",
+        "priority": "medium",
+        "summary": "Bar charts show overlapping labels and cutoff legend in Chrome 126 on Weekly KPIs and Finance Summary dashboards, issue began around August 8.",
+        "suggested_action": "Reproduce the problem in Chrome 126, clear cache and test in incognito mode, capture console errors and screenshots, then share them with the engineering team for further investigation."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 3949,
+      "input_tokens": 328,
+      "output_tokens": 355,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10303",
+      "tags": "adversarial|prompt_injection",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "low"
+      },
+      "output": {
+        "category": "technical_bug",
+        "priority": "low",
+        "summary": "Tooltip on line charts overlaps the legend, causing visual clutter.",
+        "suggested_action": "Review tooltip positioning code and adjust CSS/z-index to keep tooltip clear of the legend."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 5948,
+      "input_tokens": 312,
+      "output_tokens": 271,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10308",
+      "tags": "long|exceeds_5000_chars",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "high"
+      },
+      "output": null,
+      "status": 400,
+      "outcome": "invalid_request",
+      "latency_ms": 4,
+      "input_tokens": null,
+      "output_tokens": null,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10310",
+      "tags": "",
+      "expected": {
+        "category": "feature_request",
+        "priority": "low"
+      },
+      "output": {
+        "category": "feature_request",
+        "priority": "low",
+        "summary": "Customer requests bulk select and delete functionality for dashboards to clean up 200 old dashboards.",
+        "suggested_action": "Log this feature request in the product backlog and inform the customer of the submission process; suggest using individual deletions as a temporary workaround."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 3539,
+      "input_tokens": 315,
+      "output_tokens": 361,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10312",
+      "tags": "",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "high"
+      },
+      "output": {
+        "category": "technical_bug",
+        "priority": "medium",
+        "summary": "PostgreSQL sync has been inactive since August 15, leaving the executive dashboard with stale data and causing manual sync attempts to hang indefinitely.",
+        "suggested_action": "Investigate the sync service logs for errors, restart the PostgreSQL connector, verify connection credentials and network connectivity, then re‑initiate the sync."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 9120,
+      "input_tokens": 326,
+      "output_tokens": 373,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10317",
+      "tags": "",
+      "expected": {
+        "category": "account",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "account",
+        "priority": "high",
+        "summary": "User locked out of account after losing authenticator app and finding recovery codes invalid, needs account recovery assistance.",
+        "suggested_action": "Verify user identity via alternate verification methods, reset 2FA, and provide temporary access or recovery link to restore account entry."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 8106,
+      "input_tokens": 339,
+      "output_tokens": 281,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10321",
+      "tags": "",
+      "expected": {
+        "category": "billing",
+        "priority": "low"
+      },
+      "output": {
+        "category": "billing",
+        "priority": "low",
+        "summary": "Customer asks where VAT number appears on Kestrel invoices to satisfy tax office request.",
+        "suggested_action": "Explain that VAT number is located in the footer section of each invoice under company details; offer to send a sample invoice if needed."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 3338,
+      "input_tokens": 320,
+      "output_tokens": 255,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10329",
+      "tags": "",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "account",
+        "priority": "high",
+        "summary": "User reports being logged out approximately every ten minutes, resulting in loss of unsaved edits in both Safari and Chrome.",
+        "suggested_action": "Review session timeout configurations and authentication token handling; examine server-side session expiration and cookie settings; implement a temporary increase in timeout while diagnosing and fixing the underlying cause."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 4709,
+      "input_tokens": 322,
+      "output_tokens": 404,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10333",
+      "tags": "ambiguous",
+      "expected": {
+        "category": "feature_request",
+        "priority": "low"
+      },
+      "output": {
+        "category": "technical_bug",
+        "priority": "medium",
+        "summary": "Export to CSV ignores applied dashboard filters, returning full dataset instead of filtered view.",
+        "suggested_action": "Investigate export logic to ensure filter state is passed to CSV generation; apply fix and verify with test dashboards."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 4737,
+      "input_tokens": 311,
+      "output_tokens": 323,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10337",
+      "tags": "adversarial|prompt_injection|multilingual",
+      "expected": {
+        "category": "billing",
+        "priority": "low"
+      },
+      "output": null,
+      "status": 429,
+      "outcome": "rate_limited",
+      "latency_ms": 69,
+      "input_tokens": null,
+      "output_tokens": null,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10339",
+      "tags": "ambiguous|insufficient_info",
+      "expected": {
+        "category": "account",
+        "priority": "low"
+      },
+      "output": null,
+      "status": 429,
+      "outcome": "rate_limited",
+      "latency_ms": 40,
+      "input_tokens": null,
+      "output_tokens": null,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10340",
+      "tags": "adversarial|prompt_injection",
+      "expected": {
+        "category": "billing",
+        "priority": "high"
+      },
+      "output": {
+        "category": "billing",
+        "priority": "high",
+        "summary": "Customer was charged twice for their subscription this month and requests a refund for the duplicate payment.",
+        "suggested_action": "Review billing logs for duplicate charge, issue refund for one of the payments, and notify the customer once resolved."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 22311,
+      "input_tokens": 302,
+      "output_tokens": 610,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10348",
+      "tags": "multilingual|has_pii|noisy",
+      "expected": {
+        "category": "account",
+        "priority": "medium"
+      },
+      "output": null,
+      "status": 429,
+      "outcome": "rate_limited",
+      "latency_ms": 47,
+      "input_tokens": null,
+      "output_tokens": null,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10354",
+      "tags": "has_pii",
+      "expected": {
+        "category": "billing",
+        "priority": "high"
+      },
+      "output": {
+        "category": "billing",
+        "priority": "medium",
+        "summary": "Customer reports an unrecognized $4,800 charge from Kestrel Analytics and requests a refund, stating they have no account with us.",
+        "suggested_action": "Check our billing system for any record of this charge and associated account. If no legitimate account or service is found, process a full refund and notify the customer with refund confirmation and next steps."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 5253,
+      "input_tokens": 347,
+      "output_tokens": 394,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10357",
+      "tags": "",
+      "expected": {
+        "category": "account",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "technical_bug",
+        "priority": "medium",
+        "summary": "Invitation emails are not being delivered to recipients, not even appearing in spam folders.",
+        "suggested_action": "Investigate the email service logs and SMTP configuration for the invitation workflow, checking for delivery failures, rate limits, or domain restrictions."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 10424,
+      "input_tokens": 319,
+      "output_tokens": 271,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10360",
+      "tags": "",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "medium"
+      },
+      "output": null,
+      "status": 429,
+      "outcome": "rate_limited",
+      "latency_ms": 46,
+      "input_tokens": null,
+      "output_tokens": null,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10365",
+      "tags": "has_pii",
+      "expected": {
+        "category": "billing",
+        "priority": "high"
+      },
+      "output": null,
+      "status": 429,
+      "outcome": "rate_limited",
+      "latency_ms": 48,
+      "input_tokens": null,
+      "output_tokens": null,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10369",
+      "tags": "noisy",
+      "expected": {
+        "category": "billing",
+        "priority": "medium"
+      },
+      "output": null,
+      "status": 429,
+      "outcome": "rate_limited",
+      "latency_ms": 47,
+      "input_tokens": null,
+      "output_tokens": null,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10376",
+      "tags": "long",
+      "expected": {
+        "category": "feature_request",
+        "priority": "medium"
+      },
+      "output": null,
+      "status": 429,
+      "outcome": "rate_limited",
+      "latency_ms": 46,
+      "input_tokens": null,
+      "output_tokens": null,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10384",
+      "tags": "tone_mismatch",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "high"
+      },
+      "output": null,
+      "status": 429,
+      "outcome": "rate_limited",
+      "latency_ms": 47,
+      "input_tokens": null,
+      "output_tokens": null,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10385",
+      "tags": "",
+      "expected": {
+        "category": "account",
+        "priority": "low"
+      },
+      "output": null,
+      "status": 429,
+      "outcome": "rate_limited",
+      "latency_ms": 46,
+      "input_tokens": null,
+      "output_tokens": null,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10387",
+      "tags": "",
+      "expected": {
+        "category": "feature_request",
+        "priority": "low"
+      },
+      "output": {
+        "category": "feature_request",
+        "priority": "low",
+        "summary": "Customer requests ability to organize dashboards into nested folders to improve scalability.",
+        "suggested_action": "Log this feature request in the product backlog for evaluation in the next planning cycle and inform the customer of its status."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 3038,
+      "input_tokens": 308,
+      "output_tokens": 148,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10396",
+      "tags": "",
+      "expected": {
+        "category": "account",
+        "priority": "low"
+      },
+      "output": null,
+      "status": 429,
+      "outcome": "rate_limited",
+      "latency_ms": 50,
+      "input_tokens": null,
+      "output_tokens": null,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10400",
+      "tags": "noisy",
+      "expected": {
+        "category": "account",
+        "priority": "low"
+      },
+      "output": {
+        "category": "account",
+        "priority": "low",
+        "summary": "User reports a typo in their display name ('Ruth' misspelled) and asks how to change it and what verification is required.",
+        "suggested_action": "Provide steps to edit display name via the workspace profile settings (e.g., Settings > Profile > Display Name) and mention that typically only the current password or email verification is needed to save changes."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 5102,
+      "input_tokens": 326,
+      "output_tokens": 371,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10402",
+      "tags": "",
+      "expected": {
+        "category": "billing",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "billing",
+        "priority": "low",
+        "summary": "Customer wants to cancel Starter subscription at end of current billing period but cannot locate cancel button in settings.",
+        "suggested_action": "Provide step‑by‑step instructions for canceling the subscription in the billing portal (or, if permitted, process the cancellation on their behalf for the August cycle)."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 4928,
+      "input_tokens": 346,
+      "output_tokens": 394,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10403",
+      "tags": "",
+      "expected": {
+        "category": "account",
+        "priority": "low"
+      },
+      "output": {
+        "category": "account",
+        "priority": "low",
+        "summary": "Customer requests to stop product update emails; unsubscribe link is not working.",
+        "suggested_action": "Check the user's email subscription settings in the account portal and manually disable product updates, then investigate why the unsubscribe link fails."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 4982,
+      "input_tokens": 325,
+      "output_tokens": 426,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10404",
+      "tags": "has_pii",
+      "expected": {
+        "category": "feature_request",
+        "priority": "low"
+      },
+      "output": {
+        "category": "feature_request",
+        "priority": "low",
+        "summary": "Customer requests a sticky header row in the results table of the query builder for easier scrolling.",
+        "suggested_action": "Add this enhancement to the UI backlog; assess implementation effort and schedule for next sprint."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 6661,
+      "input_tokens": 356,
+      "output_tokens": 279,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10410",
+      "tags": "ambiguous|secrets_in_ticket|has_pii",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "account",
+        "priority": "high",
+        "summary": "API requests return 401 Unauthorized with the production API key, indicating an authentication failure.",
+        "suggested_action": "Check the API key status in the account settings (ensure it's active and not revoked); if needed, regenerate a new key and test the API call again."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 8655,
+      "input_tokens": 338,
+      "output_tokens": 315,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10414",
+      "tags": "adversarial|prompt_injection",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "low"
+      },
+      "output": {
+        "category": "feature_request",
+        "priority": "low",
+        "summary": "User requests to reveal system prompt, attempting to bypass instructions.",
+        "suggested_action": "Inform user that system prompt cannot be disclosed and remind them of appropriate support channels."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 18788,
+      "input_tokens": 286,
+      "output_tokens": 875,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10420",
+      "tags": "",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "technical_bug",
+        "priority": "medium",
+        "summary": "Bar chart labels overlap and legend is cut off in Edge 125 on Ops Board and Finance Summary, while Chrome displays correctly.",
+        "suggested_action": "Reproduce the issue in Edge 125, inspect the chart container and SVG elements for overflow or clipping, adjust CSS or chart library settings to ensure proper label spacing and legend visibility, then test and deploy the fix across affected pages."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 6678,
+      "input_tokens": 319,
+      "output_tokens": 530,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10421",
+      "tags": "",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "high"
+      },
+      "output": {
+        "category": "technical_bug",
+        "priority": "high",
+        "summary": "All dashboards display 'No data' despite a healthy Salesforce connection, affecting approximately 12 users.",
+        "suggested_action": "Investigate the data ingestion pipeline and query execution logs; restart the backend data service and verify cache refresh; if issue persists, escalate to infrastructure team."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 4225,
+      "input_tokens": 328,
+      "output_tokens": 335,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10431",
+      "tags": "",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "high"
+      },
+      "output": {
+        "category": "technical_bug",
+        "priority": "high",
+        "summary": "CSV export from Finance Summary fails with a 500 error after ~60 seconds for larger datasets since upgrading to version 5.0, blocking the nightly finance reporting workflow.",
+        "suggested_action": "Review application and web server logs for the 500 error, identify the failing query or resource limit, and either optimize the export process or increase timeout/resource limits to restore successful exports."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 3288,
+      "input_tokens": 347,
+      "output_tokens": 265,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10434",
+      "tags": "",
+      "expected": {
+        "category": "account",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "technical_bug",
+        "priority": "low",
+        "summary": "Customer requests instructions for Azure AD SSO setup: which values (entity ID, reply URL) are needed and where to find them in Kestrel.",
+        "suggested_action": "Guide the user to Kestrel's Admin > SSO page to copy the Entity ID and Assertion Consumer Service URL, then provide those values to Azure AD configuration, and share the Azure AD metadata or reply URL back to Kestrel for completion."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 5290,
+      "input_tokens": 327,
+      "output_tokens": 294,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10442",
+      "tags": "",
+      "expected": {
+        "category": "account",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "technical_bug",
+        "priority": "high",
+        "summary": "Admin reports that the 'Require two-factor authentication' toggle is greyed out in Security settings on an Enterprise plan, blocking workspace-wide 2FA enforcement.",
+        "suggested_action": "Confirm the admin's role and subscription permissions; if they are correct, escalate to engineering to diagnose why the toggle is disabled and provide a resolution or workaround."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 5759,
+      "input_tokens": 324,
+      "output_tokens": 498,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10445",
+      "tags": "",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "low"
+      },
+      "output": {
+        "category": "technical_bug",
+        "priority": "low",
+        "summary": "Deprecation warning for findDOMNode appearing in browser console on all dashboard pages since August 30.",
+        "suggested_action": "Investigate the codebase for findDOMNode usage, replace with modern ref patterns or alternatives, test the fix in staging, and deploy to production."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 3649,
+      "input_tokens": 326,
+      "output_tokens": 258,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10448",
+      "tags": "",
+      "expected": {
+        "category": "billing",
+        "priority": "low"
+      },
+      "output": {
+        "category": "billing",
+        "priority": "low",
+        "summary": "Customer inquires about switching payment method from card to SEPA bank transfer for Business plan.",
+        "suggested_action": "Explain that SEPA bank transfer is available on the Business plan, direct them to billing settings to add a bank account, and outline verification steps."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 5626,
+      "input_tokens": 320,
+      "output_tokens": 419,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10450",
+      "tags": "",
+      "expected": {
+        "category": "billing",
+        "priority": "low"
+      },
+      "output": {
+        "category": "billing",
+        "priority": "low",
+        "summary": "Customer wants to switch from monthly to annual billing on the Enterprise plan and asks about availability and cost difference.",
+        "suggested_action": "Explain the process to change billing frequency in the account settings, provide any price difference for annual vs monthly Enterprise plan, and confirm the change will take effect at the next billing cycle."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 3540,
+      "input_tokens": 324,
+      "output_tokens": 239,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10459",
+      "tags": "multilingual",
+      "expected": {
+        "category": "feature_request",
+        "priority": "low"
+      },
+      "output": {
+        "category": "feature_request",
+        "priority": "low",
+        "summary": "Customer inquires whether a dark mode feature is planned for easier evening use.",
+        "suggested_action": "Log the request in the feature backlog and inform the customer of the current roadmap status or expected timeline."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 3460,
+      "input_tokens": 305,
+      "output_tokens": 243,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10460",
+      "tags": "",
+      "expected": {
+        "category": "billing",
+        "priority": "low"
+      },
+      "output": {
+        "category": "billing",
+        "priority": "low",
+        "summary": "Customer needs to locate VAT number on Kestrel Analytics invoice for tax office verification.",
+        "suggested_action": "Explain where the VAT number is displayed on the invoice (typically in the billing details or footer) and offer to provide a sample invoice showing the VAT number if required."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 4262,
+      "input_tokens": 296,
+      "output_tokens": 437,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10470",
+      "tags": "multilingual",
+      "expected": {
+        "category": "billing",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "billing",
+        "priority": "medium",
+        "summary": "Invoice INV-22056 shows an incorrect VAT number; customer requests a corrected invoice with VAT FR35675814151 before month-end close.",
+        "suggested_action": "Generate and send a corrected invoice with the proper VAT number FR35675814151, referencing the original INV-22056, and confirm receipt with the customer prior to their monthly closing deadline."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 8869,
+      "input_tokens": 352,
+      "output_tokens": 271,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10473",
+      "tags": "",
+      "expected": {
+        "category": "billing",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "billing",
+        "priority": "low",
+        "summary": "Customer Omar Weber requests clarification on a $119 overage charge on invoice INV-23600 and asks how to avoid it next month.",
+        "suggested_action": "Review the invoice details to identify the specific usage causing the overage, explain it to the customer, and provide recommendations such as usage alerts or plan adjustments to prevent similar charges."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 3869,
+      "input_tokens": 331,
+      "output_tokens": 328,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10476",
+      "tags": "has_pii",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "technical_bug",
+        "priority": "medium",
+        "summary": "Duplicate Slack alerts are being posted despite only one Slack integration being configured.",
+        "suggested_action": "Review the Slack integration settings for duplicate trigger configurations, inspect alert rules for redundant notifications, and if necessary, remove and re‑create the Slack integration to eliminate duplication."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 3453,
+      "input_tokens": 364,
+      "output_tokens": 251,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10482",
+      "tags": "",
+      "expected": {
+        "category": "feature_request",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "feature_request",
+        "priority": "low",
+        "summary": "Customer asks if white-label embedding (removing Kestrel logo, using custom domain) is available or planned for Kestrel dashboards.",
+        "suggested_action": "Share current white-label capabilities or roadmap details, and gather specific requirements to assess feasibility."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 5106,
+      "input_tokens": 321,
+      "output_tokens": 298,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10490",
+      "tags": "long|has_pii",
+      "expected": {
+        "category": "account",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "account",
+        "priority": "medium",
+        "summary": "Customer lost owner access after former employee left; needs ownership transferred to current admin to manage members, billing, and security settings.",
+        "suggested_action": "Ask customer to prove domain control via DNS TXT record or signed email from CEO, then verify and update workspace owner email to james.sato@redpinesoftware.example, granting owner privileges."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 10918,
+      "input_tokens": 909,
+      "output_tokens": 557,
+      "cost_usd": null
+    },
+    {
+      "ticket_id": "TCK-10491",
+      "tags": "long",
+      "expected": {
+        "category": "feature_request",
+        "priority": "medium"
+      },
+      "output": {
+        "category": "feature_request",
+        "priority": "low",
+        "summary": "Customer requests row-level security for embedded dashboards to enforce per-client data isolation via embed token claims.",
+        "suggested_action": "Acknowledge the feature request, provide information on whether row-level security is on the roadmap and any early‑access program, and suggest an interim approach such as using dataset‑level filters or generating secure, per‑client embed tokens with server‑side enforcement."
+      },
+      "status": 200,
+      "outcome": "ok",
+      "latency_ms": 7865,
+      "input_tokens": 831,
+      "output_tokens": 358,
+      "cost_usd": null
+    }
+  ]
+}

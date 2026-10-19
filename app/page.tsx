@@ -25,7 +25,13 @@ export default function ChatPage() {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message }),
+        body: JSON.stringify({
+          message,
+          history: messages.map((item) => ({
+            role: item.role,
+            content: item.text,
+          })),
+        }),
       });
       const data: unknown = await response.json();
 
@@ -46,7 +52,9 @@ export default function ChatPage() {
         !("answer" in data) ||
         typeof data.answer !== "string"
       ) {
-        throw new Error("The server returned an invalid reply. Please try again.");
+        throw new Error(
+          "The server returned an invalid reply. Please try again.",
+        );
       }
 
       const answer = data.answer;
@@ -70,7 +78,7 @@ export default function ChatPage() {
   return (
     <main className="chat">
       <h1>Support chat</h1>
-      <p>Send a message and get an echo reply.</p>
+      <p>Ask a question and continue the conversation.</p>
       <section
         className="messages"
         role="log"

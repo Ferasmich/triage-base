@@ -6,17 +6,29 @@
     "dev": "next dev --port 3033",
     "build": "next build",
     "start": "next start --port 3033",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "NODE_OPTIONS=--conditions=react-server tsx --test tests/*.test.ts",
+    "evaluate": "NODE_OPTIONS=--conditions=react-server tsx --env-file=.env.local scripts/evaluate.ts",
+    "experiments": "NODE_OPTIONS=--conditions=react-server tsx --env-file=.env.local scripts/experiments.ts",
+    "test:live": "node scripts/live-check.mjs",
+    "format": "prettier --write \"app/**/*.{ts,tsx,css}\" \"lib/*.ts\" \"scripts/*.{ts,mjs}\" \"tests/*.ts\" README.md EXPERIMENTS.md package.json",
+    "report": "tsx scripts/report.ts",
+    "probe": "NODE_OPTIONS=--conditions=react-server tsx --env-file=.env.local scripts/capabilities.ts"
   },
   "dependencies": {
     "next": "^16.0.0",
+    "openai": "^7.31.0",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "server-only": "^0.0.1",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
+    "prettier": "^3.9.10",
+    "tsx": "^4.23.15",
     "typescript": "^5.9.0"
   }
 }

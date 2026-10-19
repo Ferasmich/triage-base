@@ -1,25 +1,28 @@
+import { complete } from "../../../lib/llm";
+import { CHAT_SYSTEM_PROMPT } from "../../../lib/prompt";
+import { ChatRequestSchema } from "../../../lib/schema";
+import { readBody, invalidRequest, errorResponse } from "../../../lib/errors";
 export async function POST(request: Request) {
-  let body: unknown;
+  let raw: unknown;
   try {
-    body = await request.json();
+    raw = await readBody(request);
   } catch {
-    return Response.json({ error: "Invalid JSON body." }, { status: 400 });
+    return invalidRequest();
   }
-
-  if (
-    typeof body !== "object" ||
-    body === null ||
-    !("message" in body) ||
-    typeof body.message !== "string" ||
-    !body.message.trim()
-  ) {
+  const parsed = ChatRequestSchema.safeParse(raw);
+  if (!parsed.success) return invalidRequest();
+  try {
     return Response.json(
-      { error: "Please provide a non-empty message string." },
-      { status: 400 },
+      await complete(
+        [
+          { role: "system", content: CHAT_SYSTEM_PROMPT },
+          ...parsed.data.history,
+          { role: "user", content: parsed.data.message.trim() },
+        ],
+        "chat",
+      ),
     );
+  } catch (error) {
+    return errorResponse(error);
   }
-
-  return Response.json({
-    answer: `Hello, you just said: ${body.message}`,
-  });
 }

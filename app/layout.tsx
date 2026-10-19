@@ -3,14 +3,21 @@ import type { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Support chat",
-  description: "A simple support ticket chat.",
+  title: "Kestrel Support Triage",
+  description: "Validated support triage, chat and evaluation.",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <nav aria-label="Main navigation">
+          <a href="/">Chat</a>
+          <a href="/triage">Triage</a>
+          <a href="/admin">Admin</a>
+        </nav>
+        {children}
+      </body>
     </html>
   );
 }
