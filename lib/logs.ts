@@ -3,6 +3,14 @@ import { appendFile, mkdir, readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 export type CallLog = {
   ts: string;
+  strategy?: string;
+  served_model?: string | null;
+  requested_model?: string;
+  enable_thinking?: boolean;
+  provider_status?: number;
+  provider_request_id?: string | null;
+  model_revision?: string;
+  model_sha256?: string;
   request_id?: string;
   route: string;
   api: string;

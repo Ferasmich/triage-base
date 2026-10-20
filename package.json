@@ -13,7 +13,9 @@
     "test:live": "node scripts/live-check.mjs",
     "format": "prettier --write \"app/**/*.{ts,tsx,css}\" \"lib/*.ts\" \"scripts/*.{ts,mjs}\" \"tests/*.ts\" README.md EXPERIMENTS.md package.json",
     "report": "tsx scripts/report.ts",
-    "probe": "NODE_OPTIONS=--conditions=react-server tsx --env-file=.env.local scripts/capabilities.ts"
+    "probe": "NODE_OPTIONS=--conditions=react-server tsx --env-file=.env.local scripts/capabilities.ts",
+    "test:c5:live": "node scripts/c5-live-check.mjs",
+    "test:submission:live": "NODE_OPTIONS=--conditions=react-server tsx scripts/submission-check.ts"
   },
   "dependencies": {
     "next": "^16.0.0",

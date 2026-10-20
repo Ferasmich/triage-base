@@ -9,3 +9,13 @@ tmp/
 .env.*
 !.env.example
 !.env.*.example
+
+# Local smoke/evaluation runs and raw verification output. Commit curated summaries only.
+runs/
+docs/c5-final-contract-check.json
+docs/c5-live-verification.json
+docs/chat-stream-verification.json
+docs/credential-audit.json
+docs/diffusion-trial-verification.json
+docs/llm-replacement-probes.json
+docs/submission-verification.json

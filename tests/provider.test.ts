@@ -59,6 +59,7 @@ test("real SDK and routes validate replies, retry once, map errors and preserve 
   process.env.LLM_API_KEY = "test-secret";
   process.env.LLM_MODEL = "test";
   process.env.LLM_OUTPUT_MODE = "json_schema";
+  process.env.LLM_ENABLE_THINKING = "false";
   const request = (body: unknown) =>
     new Request("http://localhost", {
       method: "POST",
@@ -74,6 +75,56 @@ test("real SDK and routes validate replies, retry once, map errors and preserve 
       200,
     );
     assert.equal(calls[0].response_format.json_schema.strict, true);
+    assert.equal(calls[0].chat_template_kwargs.enable_thinking, false);
+    const usageResponse = await triage(
+      request({ ticket: { subject: "invoice", body: "update it" } }),
+    );
+    const usageBody = await usageResponse.json();
+    assert.deepEqual(usageBody.usage, {
+      input_tokens: 10,
+      output_tokens: 5,
+      total_tokens: 15,
+    });
+    assert.equal(usageBody.model, "test");
+    const { runSmoke } = await import("../lib/smoke");
+    const { mkdir, writeFile, readdir, readFile } =
+      await import("node:fs/promises");
+    await mkdir("data");
+    await writeFile(
+      "data/support_tickets_100_labelled.json",
+      JSON.stringify([
+        {
+          ticket_id: "A",
+          subject: "invoice",
+          body: "update it",
+          category: "billing",
+          priority: "low",
+        },
+      ]),
+    );
+    const run = await runSmoke("100", 1);
+    assert.equal(run.metrics.category_accuracy, 1);
+    assert.equal(run.metrics.priority_mismatches, 0);
+    assert.deepEqual(run.models, ["test"]);
+    const files = await readdir("runs");
+    assert.equal(
+      JSON.parse(await readFile(`runs/${files[0]}`, "utf8")).rows.length,
+      1,
+    );
+    await writeFile(
+      "data/support_tickets_500.json",
+      JSON.stringify([
+        { ticket_id: "B", subject: "invoice", body: "update it" },
+      ]),
+    );
+    const unlabelled = await runSmoke("500", 1);
+    assert.equal(unlabelled.metrics.category_accuracy, null);
+    assert.equal(unlabelled.metrics.category_mismatches, null);
+    providerStatus = 429;
+    const failed = await runSmoke("100", 1);
+    assert.equal(failed.metrics.category_mismatches, 1);
+    assert.equal(failed.metrics.outcome_counts.rate_limited, 1);
+    providerStatus = 200;
     for (const invalid of [
       "```json\n{}\n```",
       "{}",

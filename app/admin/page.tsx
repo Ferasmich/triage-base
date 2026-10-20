@@ -4,7 +4,7 @@ export default async function AdminPage() {
   const [logs, runs] = await Promise.all([readLogs(), readRuns()]);
   const groups = new Map<string, typeof logs>();
   for (const row of logs) {
-    const key = `${row.prompt_version} / ${row.api} / ${row.provider} / ${row.model}`;
+    const key = `${row.strategy || "llm"} / ${row.prompt_version} / ${row.api} / ${row.provider} / ${row.model}`;
     groups.set(key, [...(groups.get(key) || []), row]);
   }
   const sum = (
@@ -66,6 +66,7 @@ export default async function AdminPage() {
           <thead>
             <tr>
               <th>Run</th>
+              <th>Strategy / served / attempted models</th>
               <th>Outcomes</th>
               <th>Category accuracy</th>
               <th>Priority accuracy</th>
@@ -77,7 +78,16 @@ export default async function AdminPage() {
             {runs.map((run) => (
               <tr key={run.file}>
                 <td>{run.file}</td>
-                <td>{JSON.stringify(run.metrics?.outcomes)}</td>
+                <td>
+                  {run.strategy || "llm"} /{" "}
+                  {run.models?.join(", ") || run.model || "None confirmed"} /{" "}
+                  {run.attempted_models?.join(", ") || "—"}
+                </td>
+                <td>
+                  {JSON.stringify(
+                    run.metrics?.outcome_counts || run.metrics?.outcomes,
+                  )}
+                </td>
                 <td>{run.metrics?.category_accuracy ?? "—"}</td>
                 <td>{run.metrics?.priority_accuracy ?? "—"}</td>
                 <td>{run.metrics?.mean_latency_ms ?? "—"}</td>
@@ -94,11 +104,13 @@ export default async function AdminPage() {
             <tr>
               <th>Time</th>
               <th>Route</th>
-              <th>Model</th>
+              <th>Strategy</th>
+              <th>Served / attempted model</th>
               <th>Status</th>
               <th>Attempts</th>
               <th>Latency</th>
-              <th>Tokens in / out</th>
+              <th>Tokens in / out / total</th>
+              <th>USD</th>
             </tr>
           </thead>
           <tbody>
@@ -109,15 +121,24 @@ export default async function AdminPage() {
                 <tr key={i}>
                   <td>{row.ts}</td>
                   <td>{row.route}</td>
-                  <td>{row.model}</td>
+                  <td>{row.strategy || "llm"}</td>
                   <td>
-                    {row.status} {row.error_code}
+                    {row.served_model ?? "Unconfirmed (legacy or failed call)"}{" "}
+                    / {row.requested_model || row.model}
+                  </td>
+                  <td>
+                    {row.status} {row.error_code}{" "}
+                    {row.provider_status && `(provider ${row.provider_status})`}
                   </td>
                   <td>{row.attempts}</td>
                   <td>{row.latency_ms} ms</td>
                   <td>
-                    {row.input_tokens ?? "?"} / {row.output_tokens ?? "?"}
+                    {row.input_tokens ?? "?"} / {row.output_tokens ?? "?"} /{" "}
+                    {row.input_tokens !== null && row.output_tokens !== null
+                      ? row.input_tokens + row.output_tokens
+                      : "?"}
                   </td>
+                  <td>{row.cost_usd ?? "Unknown"}</td>
                 </tr>
               ))}
           </tbody>

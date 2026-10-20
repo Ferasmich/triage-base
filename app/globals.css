@@ -49,6 +49,7 @@ form {
 }
 
 textarea,
+select,
 button {
   padding: 12px;
   border: 1px solid #ccd3df;

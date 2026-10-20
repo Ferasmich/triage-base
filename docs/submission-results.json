@@ -1,0 +1,895 @@
+{
+  "purpose": "Curated assignment results; raw local logs, run rows and verification transcripts are excluded from Git.",
+  "verified_at": "2026-10-20T17:05:48.779Z",
+  "live_check_status": "PASS",
+  "manual_frontend_qa": {
+    "status": "PASS",
+    "source": "User confirmed completion and pass in the submission-preparation request on 2026-10-20.",
+    "browser_version": "Not supplied; no browser automation claim."
+  },
+  "triage": [
+    {
+      "strategy": "llm",
+      "ticket_id": "TCK-10001",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "low"
+      },
+      "status": 200,
+      "models": ["nvidia/nemotron-3.5-lightning-30b-a3b"],
+      "labels": {
+        "category": "technical_bug",
+        "priority": "low"
+      },
+      "usage": {
+        "input_tokens": 351,
+        "output_tokens": 71,
+        "total_tokens": 422
+      },
+      "cost_usd": 0,
+      "latency_ms": 1551
+    },
+    {
+      "strategy": "dm",
+      "ticket_id": "TCK-10001",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "low"
+      },
+      "status": 200,
+      "models": ["vllm-sr/d3-flash"],
+      "labels": {
+        "category": "technical_bug",
+        "priority": "low"
+      },
+      "usage": {
+        "input_tokens": 496,
+        "output_tokens": 0,
+        "total_tokens": 496
+      },
+      "cost_usd": 0,
+      "latency_ms": 523
+    },
+    {
+      "strategy": "dm+llm",
+      "ticket_id": "TCK-10001",
+      "expected": {
+        "category": "technical_bug",
+        "priority": "low"
+      },
+      "status": 200,
+      "models": ["vllm-sr/d3-flash", "nvidia/nemotron-3.5-lightning-30b-a3b"],
+      "labels": {
+        "category": "technical_bug",
+        "priority": "low"
+      },
+      "usage": {
+        "input_tokens": 883,
+        "output_tokens": 69,
+        "total_tokens": 952
+      },
+      "cost_usd": 0,
+      "latency_ms": 1364
+    }
+  ],
+  "smoke_runs": [
+    {
+      "strategy": "llm",
+      "dataset": "100",
+      "status": 200,
+      "id": "43b9f804-611d-497f-9916-98a64d4e85ca",
+      "models": ["nvidia/nemotron-3.5-lightning-30b-a3b"],
+      "metrics": {
+        "count": 3,
+        "successful_count": 3,
+        "successful_category_accuracy": 1,
+        "successful_priority_accuracy": 0.6666666666666666,
+        "outcomes": {
+          "200": 3
+        },
+        "category_accuracy": 1,
+        "priority_accuracy": 0.6666666666666666,
+        "category_confusion": {
+          "billing": {
+            "billing": 1
+          },
+          "account": {
+            "account": 1
+          },
+          "technical_bug": {
+            "technical_bug": 1
+          }
+        },
+        "priority_confusion": {
+          "high": {
+            "high": 1,
+            "medium": 1
+          },
+          "medium": {
+            "medium": 1
+          }
+        },
+        "mean_latency_ms": 844,
+        "cost_usd": 0,
+        "slices": {
+          "adversarial": {
+            "count": 1,
+            "category_accuracy": 1,
+            "priority_accuracy": 1
+          },
+          "prompt_injection": {
+            "count": 1,
+            "category_accuracy": 1,
+            "priority_accuracy": 1
+          },
+          "long": {
+            "count": 1,
+            "category_accuracy": 1,
+            "priority_accuracy": 1
+          },
+          "has_pii": {
+            "count": 1,
+            "category_accuracy": 1,
+            "priority_accuracy": 1
+          },
+          "tone_mismatch": {
+            "count": 1,
+            "category_accuracy": 1,
+            "priority_accuracy": 0
+          }
+        },
+        "category_mismatches": 0,
+        "priority_mismatches": 1,
+        "outcome_counts": {
+          "ok": 3
+        }
+      }
+    },
+    {
+      "strategy": "llm",
+      "dataset": "500",
+      "status": 200,
+      "id": "c08a9c15-0e3b-4456-87e3-e2ecb9e6ea9f",
+      "models": ["nvidia/nemotron-3.5-lightning-30b-a3b"],
+      "metrics": {
+        "count": 2,
+        "successful_count": 2,
+        "successful_category_accuracy": null,
+        "successful_priority_accuracy": null,
+        "outcomes": {
+          "200": 2
+        },
+        "category_accuracy": null,
+        "priority_accuracy": null,
+        "category_confusion": {},
+        "priority_confusion": {},
+        "mean_latency_ms": 850,
+        "cost_usd": 0,
+        "slices": {},
+        "category_mismatches": null,
+        "priority_mismatches": null,
+        "outcome_counts": {
+          "ok": 2
+        }
+      }
+    },
+    {
+      "strategy": "dm",
+      "dataset": "100",
+      "status": 200,
+      "id": "ec51217d-7158-4bae-bbcc-0c945df0decc",
+      "models": ["vllm-sr/d3-flash"],
+      "metrics": {
+        "count": 3,
+        "successful_count": 3,
+        "successful_category_accuracy": 1,
+        "successful_priority_accuracy": 0.6666666666666666,
+        "outcomes": {
+          "200": 3
+        },
+        "category_accuracy": 1,
+        "priority_accuracy": 0.6666666666666666,
+        "category_confusion": {
+          "billing": {
+            "billing": 2
+          },
+          "account": {
+            "account": 1
+          }
+        },
+        "priority_confusion": {
+          "medium": {
+            "medium": 1,
+            "low": 1
+          },
+          "high": {
+            "high": 1
+          }
+        },
+        "mean_latency_ms": 4399,
+        "cost_usd": 0,
+        "slices": {
+          "noisy": {
+            "count": 1,
+            "category_accuracy": 1,
+            "priority_accuracy": 1
+          },
+          "has_pii": {
+            "count": 1,
+            "category_accuracy": 1,
+            "priority_accuracy": 1
+          }
+        },
+        "category_mismatches": 0,
+        "priority_mismatches": 1,
+        "outcome_counts": {
+          "ok": 3
+        }
+      }
+    },
+    {
+      "strategy": "dm",
+      "dataset": "500",
+      "status": 200,
+      "id": "1535b37d-c7fb-4d80-b8b3-0a6ffb76d6e9",
+      "models": ["vllm-sr/d3-flash"],
+      "metrics": {
+        "count": 2,
+        "successful_count": 2,
+        "successful_category_accuracy": null,
+        "successful_priority_accuracy": null,
+        "outcomes": {
+          "200": 2
+        },
+        "category_accuracy": null,
+        "priority_accuracy": null,
+        "category_confusion": {},
+        "priority_confusion": {},
+        "mean_latency_ms": 3270,
+        "cost_usd": 0,
+        "slices": {},
+        "category_mismatches": null,
+        "priority_mismatches": null,
+        "outcome_counts": {
+          "ok": 2
+        }
+      }
+    },
+    {
+      "strategy": "dm+llm",
+      "dataset": "100",
+      "status": 200,
+      "id": "6a25cdd2-d753-42d4-a7a4-359bef15c771",
+      "models": ["vllm-sr/d3-flash", "nvidia/nemotron-3.5-lightning-30b-a3b"],
+      "metrics": {
+        "count": 3,
+        "successful_count": 3,
+        "successful_category_accuracy": 0.6666666666666666,
+        "successful_priority_accuracy": 0.6666666666666666,
+        "outcomes": {
+          "200": 3
+        },
+        "category_accuracy": 0.6666666666666666,
+        "priority_accuracy": 0.6666666666666666,
+        "category_confusion": {
+          "technical_bug": {
+            "technical_bug": 1
+          },
+          "account": {
+            "account": 1
+          },
+          "feature_request": {
+            "technical_bug": 1
+          }
+        },
+        "priority_confusion": {
+          "high": {
+            "high": 1
+          },
+          "medium": {
+            "medium": 1
+          },
+          "low": {
+            "medium": 1
+          }
+        },
+        "mean_latency_ms": 2389,
+        "cost_usd": 0,
+        "slices": {
+          "ambiguous": {
+            "count": 1,
+            "category_accuracy": 0,
+            "priority_accuracy": 0
+          }
+        },
+        "category_mismatches": 1,
+        "priority_mismatches": 1,
+        "outcome_counts": {
+          "ok": 3
+        }
+      }
+    },
+    {
+      "strategy": "dm+llm",
+      "dataset": "500",
+      "status": 200,
+      "id": "b07264f8-60d4-48e7-b24e-d160acc6b0ad",
+      "models": ["vllm-sr/d3-flash", "nvidia/nemotron-3.5-lightning-30b-a3b"],
+      "metrics": {
+        "count": 2,
+        "successful_count": 2,
+        "successful_category_accuracy": null,
+        "successful_priority_accuracy": null,
+        "outcomes": {
+          "200": 2
+        },
+        "category_accuracy": null,
+        "priority_accuracy": null,
+        "category_confusion": {},
+        "priority_confusion": {},
+        "mean_latency_ms": 2146,
+        "cost_usd": 0,
+        "slices": {},
+        "category_mismatches": null,
+        "priority_mismatches": null,
+        "outcome_counts": {
+          "ok": 2
+        }
+      }
+    }
+  ],
+  "chat_and_streaming": {
+    "checked_at": "2026-10-20T17:06:36.438Z",
+    "base_url": "http://localhost:3033",
+    "status": "PASS",
+    "chat_history": true,
+    "invalid_role_rejected": true,
+    "triage_validated": true,
+    "explanation_sse_events": 54,
+    "explanation_transport_chunks": 53,
+    "explanation_completed": true,
+    "original_result_unchanged": true,
+    "pages": ["/", "/triage", "/admin"]
+  },
+  "llm_probes": [
+    {
+      "requested_model": "nvidia/nemotron-3-super-120b-a12b",
+      "status": 404,
+      "actual_model": null,
+      "latency_ms": 330,
+      "valid_triage": false,
+      "usage": null
+    },
+    {
+      "requested_model": "nvidia/nemotron-3.5-lightning-30b-a3b",
+      "status": 200,
+      "actual_model": "nvidia/nemotron-3.5-lightning-30b-a3b",
+      "latency_ms": 9283,
+      "valid_triage": false,
+      "finish_reason": "length",
+      "usage": {
+        "prompt_tokens": 288,
+        "completion_tokens": 1024,
+        "total_tokens": 1312,
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0
+        },
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 1024,
+          "rejected_prediction_tokens": null
+        }
+      }
+    },
+    {
+      "requested_model": "google/diffusiongemma-26b-a4b-it",
+      "status": 200,
+      "actual_model": "google/diffusiongemma-26b-a4b-it",
+      "latency_ms": 20337,
+      "valid_triage": true,
+      "finish_reason": "stop",
+      "usage": {
+        "prompt_tokens": 298,
+        "total_tokens": 369,
+        "completion_tokens": 71,
+        "prompt_tokens_details": null
+      }
+    },
+    {
+      "requested_model": "google/gemma-4-31b-it",
+      "status": null,
+      "error": "TimeoutError",
+      "latency_ms": 35000
+    },
+    {
+      "requested_model": "deepseek-ai/deepseek-v4.1-flash",
+      "status": null,
+      "error": "TimeoutError",
+      "latency_ms": 35001
+    },
+    {
+      "requested_model": "nvidia/nemotron-3.5-lightning-30b-a3b",
+      "enable_thinking": false,
+      "status": 200,
+      "actual_model": "nvidia/nemotron-3.5-lightning-30b-a3b",
+      "valid_triage": true,
+      "latency_ms": 708,
+      "usage": {
+        "prompt_tokens": 288,
+        "completion_tokens": 51,
+        "total_tokens": 339,
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0
+        },
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        }
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "historical_evaluations": [
+    {
+      "created_at": "2026-10-14T10:21:23.362Z",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "prompt_version": "triage-v2.1",
+      "dataset": "support_tickets_100_labelled.json",
+      "metrics": {
+        "count": 3,
+        "successful_count": 3,
+        "successful_category_accuracy": 1,
+        "successful_priority_accuracy": 1,
+        "outcomes": {
+          "200": 3
+        },
+        "category_accuracy": 1,
+        "priority_accuracy": 1,
+        "category_confusion": {
+          "technical_bug": {
+            "technical_bug": 3
+          }
+        },
+        "priority_confusion": {
+          "low": {
+            "low": 1
+          },
+          "medium": {
+            "medium": 2
+          }
+        },
+        "mean_latency_ms": 6306,
+        "cost_usd": null,
+        "slices": {
+          "has_pii": {
+            "count": 1,
+            "category_accuracy": 1,
+            "priority_accuracy": 1
+          },
+          "multilingual": {
+            "count": 1,
+            "category_accuracy": 1,
+            "priority_accuracy": 1
+          },
+          "ambiguous": {
+            "count": 1,
+            "category_accuracy": 1,
+            "priority_accuracy": 1
+          }
+        }
+      }
+    },
+    {
+      "created_at": "2026-10-14T10:23:12.127Z",
+      "model": "meta/llama-3.1-8b-instruct",
+      "provider": "integrate.api.nvidia.com",
+      "prompt_version": "triage-v2.1",
+      "dataset": "support_tickets_100_labelled.json",
+      "metrics": {
+        "count": 100,
+        "successful_count": 0,
+        "successful_category_accuracy": null,
+        "successful_priority_accuracy": null,
+        "outcomes": {
+          "400": 1,
+          "502": 99
+        },
+        "category_accuracy": 0,
+        "priority_accuracy": 0,
+        "category_confusion": {
+          "technical_bug": {
+            "NO_OUTPUT": 32
+          },
+          "feature_request": {
+            "NO_OUTPUT": 21
+          },
+          "account": {
+            "NO_OUTPUT": 23
+          },
+          "billing": {
+            "NO_OUTPUT": 24
+          }
+        },
+        "priority_confusion": {
+          "low": {
+            "NO_OUTPUT": 36
+          },
+          "medium": {
+            "NO_OUTPUT": 43
+          },
+          "high": {
+            "NO_OUTPUT": 21
+          }
+        },
+        "mean_latency_ms": 391,
+        "cost_usd": null,
+        "slices": {
+          "has_pii": {
+            "count": 14,
+            "category_accuracy": 0,
+            "priority_accuracy": 0
+          },
+          "multilingual": {
+            "count": 7,
+            "category_accuracy": 0,
+            "priority_accuracy": 0
+          },
+          "ambiguous": {
+            "count": 7,
+            "category_accuracy": 0,
+            "priority_accuracy": 0
+          },
+          "long": {
+            "count": 5,
+            "category_accuracy": 0,
+            "priority_accuracy": 0
+          },
+          "adversarial": {
+            "count": 8,
+            "category_accuracy": 0,
+            "priority_accuracy": 0
+          },
+          "prompt_injection": {
+            "count": 8,
+            "category_accuracy": 0,
+            "priority_accuracy": 0
+          },
+          "noisy": {
+            "count": 8,
+            "category_accuracy": 0,
+            "priority_accuracy": 0
+          },
+          "tone_mismatch": {
+            "count": 4,
+            "category_accuracy": 0,
+            "priority_accuracy": 0
+          },
+          "no_natural_category": {
+            "count": 1,
+            "category_accuracy": 0,
+            "priority_accuracy": 0
+          },
+          "html_injection": {
+            "count": 1,
+            "category_accuracy": 0,
+            "priority_accuracy": 0
+          },
+          "sql_injection": {
+            "count": 1,
+            "category_accuracy": 0,
+            "priority_accuracy": 0
+          },
+          "exceeds_5000_chars": {
+            "count": 1,
+            "category_accuracy": 0,
+            "priority_accuracy": 0
+          },
+          "insufficient_info": {
+            "count": 1,
+            "category_accuracy": 0,
+            "priority_accuracy": 0
+          },
+          "secrets_in_ticket": {
+            "count": 1,
+            "category_accuracy": 0,
+            "priority_accuracy": 0
+          }
+        }
+      }
+    },
+    {
+      "created_at": "2026-10-14T10:25:05.832Z",
+      "model": "google/diffusiongemma-26b-a4b-it",
+      "provider": "integrate.api.nvidia.com",
+      "prompt_version": "triage-v2.1",
+      "dataset": "support_tickets_100_labelled.json",
+      "metrics": {
+        "count": 100,
+        "successful_count": 38,
+        "successful_category_accuracy": 0.9736842105263158,
+        "successful_priority_accuracy": 0.7631578947368421,
+        "outcomes": {
+          "200": 38,
+          "400": 1,
+          "429": 61
+        },
+        "category_accuracy": 0.37,
+        "priority_accuracy": 0.29,
+        "category_confusion": {
+          "technical_bug": {
+            "technical_bug": 13,
+            "NO_OUTPUT": 19
+          },
+          "feature_request": {
+            "feature_request": 11,
+            "technical_bug": 1,
+            "NO_OUTPUT": 9
+          },
+          "account": {
+            "account": 6,
+            "NO_OUTPUT": 17
+          },
+          "billing": {
+            "billing": 7,
+            "NO_OUTPUT": 17
+          }
+        },
+        "priority_confusion": {
+          "low": {
+            "low": 13,
+            "medium": 1,
+            "NO_OUTPUT": 22
+          },
+          "medium": {
+            "medium": 8,
+            "high": 4,
+            "low": 3,
+            "NO_OUTPUT": 28
+          },
+          "high": {
+            "high": 8,
+            "medium": 1,
+            "NO_OUTPUT": 12
+          }
+        },
+        "mean_latency_ms": 393,
+        "cost_usd": null,
+        "slices": {
+          "has_pii": {
+            "count": 14,
+            "category_accuracy": 0.21428571428571427,
+            "priority_accuracy": 0.21428571428571427
+          },
+          "multilingual": {
+            "count": 7,
+            "category_accuracy": 0.14285714285714285,
+            "priority_accuracy": 0.14285714285714285
+          },
+          "ambiguous": {
+            "count": 7,
+            "category_accuracy": 0.2857142857142857,
+            "priority_accuracy": 0.14285714285714285
+          },
+          "long": {
+            "count": 5,
+            "category_accuracy": 0.2,
+            "priority_accuracy": 0
+          },
+          "adversarial": {
+            "count": 8,
+            "category_accuracy": 0.375,
+            "priority_accuracy": 0.375
+          },
+          "prompt_injection": {
+            "count": 8,
+            "category_accuracy": 0.375,
+            "priority_accuracy": 0.375
+          },
+          "noisy": {
+            "count": 8,
+            "category_accuracy": 0.5,
+            "priority_accuracy": 0.375
+          },
+          "tone_mismatch": {
+            "count": 4,
+            "category_accuracy": 0.5,
+            "priority_accuracy": 0.25
+          },
+          "no_natural_category": {
+            "count": 1,
+            "category_accuracy": 1,
+            "priority_accuracy": 1
+          },
+          "html_injection": {
+            "count": 1,
+            "category_accuracy": 1,
+            "priority_accuracy": 1
+          },
+          "sql_injection": {
+            "count": 1,
+            "category_accuracy": 0,
+            "priority_accuracy": 0
+          },
+          "exceeds_5000_chars": {
+            "count": 1,
+            "category_accuracy": 0,
+            "priority_accuracy": 0
+          },
+          "insufficient_info": {
+            "count": 1,
+            "category_accuracy": 0,
+            "priority_accuracy": 0
+          },
+          "secrets_in_ticket": {
+            "count": 1,
+            "category_accuracy": 0,
+            "priority_accuracy": 0
+          }
+        }
+      }
+    },
+    {
+      "created_at": "2026-10-14T10:25:51.423Z",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "provider": "integrate.api.nvidia.com",
+      "prompt_version": "triage-v2.1",
+      "dataset": "support_tickets_100_labelled.json",
+      "metrics": {
+        "count": 100,
+        "successful_count": 89,
+        "successful_category_accuracy": 0.898876404494382,
+        "successful_priority_accuracy": 0.6741573033707865,
+        "outcomes": {
+          "200": 89,
+          "400": 1,
+          "429": 10
+        },
+        "category_accuracy": 0.8,
+        "priority_accuracy": 0.6,
+        "category_confusion": {
+          "technical_bug": {
+            "technical_bug": 26,
+            "NO_OUTPUT": 3,
+            "account": 2,
+            "feature_request": 1
+          },
+          "feature_request": {
+            "feature_request": 18,
+            "technical_bug": 2,
+            "NO_OUTPUT": 1
+          },
+          "account": {
+            "account": 15,
+            "technical_bug": 4,
+            "NO_OUTPUT": 4
+          },
+          "billing": {
+            "billing": 21,
+            "NO_OUTPUT": 3
+          }
+        },
+        "priority_confusion": {
+          "low": {
+            "low": 30,
+            "medium": 2,
+            "NO_OUTPUT": 4
+          },
+          "medium": {
+            "medium": 18,
+            "high": 9,
+            "low": 12,
+            "NO_OUTPUT": 4
+          },
+          "high": {
+            "high": 12,
+            "medium": 6,
+            "NO_OUTPUT": 3
+          }
+        },
+        "mean_latency_ms": 5101,
+        "cost_usd": null,
+        "slices": {
+          "has_pii": {
+            "count": 14,
+            "category_accuracy": 0.7857142857142857,
+            "priority_accuracy": 0.5
+          },
+          "multilingual": {
+            "count": 7,
+            "category_accuracy": 0.7142857142857143,
+            "priority_accuracy": 0.7142857142857143
+          },
+          "ambiguous": {
+            "count": 7,
+            "category_accuracy": 0.42857142857142855,
+            "priority_accuracy": 0.2857142857142857
+          },
+          "long": {
+            "count": 5,
+            "category_accuracy": 0.6,
+            "priority_accuracy": 0.4
+          },
+          "adversarial": {
+            "count": 8,
+            "category_accuracy": 0.75,
+            "priority_accuracy": 0.75
+          },
+          "prompt_injection": {
+            "count": 8,
+            "category_accuracy": 0.75,
+            "priority_accuracy": 0.75
+          },
+          "noisy": {
+            "count": 8,
+            "category_accuracy": 0.75,
+            "priority_accuracy": 0.625
+          },
+          "tone_mismatch": {
+            "count": 4,
+            "category_accuracy": 0.75,
+            "priority_accuracy": 0.5
+          },
+          "no_natural_category": {
+            "count": 1,
+            "category_accuracy": 1,
+            "priority_accuracy": 1
+          },
+          "html_injection": {
+            "count": 1,
+            "category_accuracy": 1,
+            "priority_accuracy": 1
+          },
+          "sql_injection": {
+            "count": 1,
+            "category_accuracy": 1,
+            "priority_accuracy": 0
+          },
+          "exceeds_5000_chars": {
+            "count": 1,
+            "category_accuracy": 0,
+            "priority_accuracy": 0
+          },
+          "insufficient_info": {
+            "count": 1,
+            "category_accuracy": 0,
+            "priority_accuracy": 0
+          },
+          "secrets_in_ticket": {
+            "count": 1,
+            "category_accuracy": 0,
+            "priority_accuracy": 0
+          }
+        }
+      }
+    }
+  ],
+  "credential_audit": {
+    "checked_at": "2026-10-20T17:07:44.696579+00:00",
+    "method": "Exact configured credential matches plus provider-token/private-key signatures; reachable Git blobs and commit messages, index, tracked worktree, non-ignored untracked files.",
+    "configured_credentials_checked": ["LLM_API_KEY", "DECISION_API_KEY"],
+    "findings": [],
+    "status": "PASS",
+    "limitations": "Not an exhaustive proof that arbitrary secrets are absent; unreachable/dangling objects, external remotes and ignored runtime/build files are outside scope."
+  },
+  "limitations": [
+    "Small random labelled samples differ by strategy and are not a model-quality ranking.",
+    "Historical provider failures remain documented; free endpoint availability can change."
+  ],
+  "final_submission_checks": {
+    "checked_at": "2026-10-20T17:18:35.030737+00:00",
+    "automated_tests": {
+      "status": "PASS",
+      "passed": 9,
+      "failed": 0
+    },
+    "typecheck": "PASS",
+    "production_build": "PASS",
+    "manual_frontend_qa": "PASS (confirmed by user)",
+    "runtime_artifacts": "Excluded from commit; curated results only"
+  }
+}

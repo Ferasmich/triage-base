@@ -35,6 +35,7 @@ export async function POST(request: Request) {
     const body = new ReadableStream({
       async start(controller) {
         let usage;
+        let servedModel: string | undefined;
         let status = 200;
         let code;
         const send = (event: unknown) =>
@@ -43,6 +44,7 @@ export async function POST(request: Request) {
           );
         try {
           for await (const chunk of stream) {
+            if (chunk.model) servedModel = chunk.model;
             if (chunk.usage) usage = chunk.usage;
             if (chunk.choices[0]?.finish_reason === "length")
               throw new InvalidOutputError();
@@ -56,7 +58,7 @@ export async function POST(request: Request) {
           code = mapped.code;
           if (!request.signal.aborted) send({ error: mapped.error });
         } finally {
-          await recordStream(cfg, started, status, usage, code);
+          await recordStream(cfg, started, status, usage, code, servedModel);
           controller.close();
         }
       },

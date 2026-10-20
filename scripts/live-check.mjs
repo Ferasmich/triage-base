@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { writeFile } from "node:fs/promises";
 const base = process.env.EVAL_URL || "http://localhost:3033";
 async function post(path, body) {
   return fetch(base + path, {
@@ -52,12 +53,39 @@ while (true) {
   chunks++;
   text += new TextDecoder().decode(value);
 }
-assert.ok(chunks > 1, "Expected multiple stream chunks");
+// TCP/HTTP can combine multiple SSE events into a single reader chunk.
+const events = text
+  .split("\n\n")
+  .filter((e) => e.startsWith("data: "))
+  .map((e) => JSON.parse(e.slice(6)));
+assert.ok(events.length >= 2, "Expected text and completion SSE events");
+assert.ok(events.some((e) => typeof e.text === "string" && e.text.length > 0));
+assert.equal(events.at(-1).done, true);
 assert.match(text, /"done":true/);
 assert.doesNotMatch(text, /"error":/);
 assert.equal(JSON.stringify(triage), snapshot);
 for (const route of ["/", "/triage", "/admin"])
   assert.equal((await fetch(base + route)).status, 200);
+await writeFile(
+  "docs/chat-stream-verification.json",
+  JSON.stringify(
+    {
+      checked_at: new Date().toISOString(),
+      base_url: base,
+      status: "PASS",
+      chat_history: true,
+      invalid_role_rejected: true,
+      triage_validated: true,
+      explanation_sse_events: events.length,
+      explanation_transport_chunks: chunks,
+      explanation_completed: true,
+      original_result_unchanged: true,
+      pages: ["/", "/triage", "/admin"],
+    },
+    null,
+    2,
+  ) + "\n",
+);
 console.log(
-  `Live checks passed: chat history, rejected system role, validated triage, ${chunks} streaming chunks, and all three pages.`,
+  `Live checks passed: chat history, rejected system role, validated triage, ${events.length} SSE events in ${chunks} transport chunks, and all three pages.`,
 );

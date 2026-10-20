@@ -1,13 +1,18 @@
 "use client";
 import { useState, type FormEvent } from "react";
-import type { TriageResult } from "../../lib/schema";
+import { TriageResponseSchema, TriageRequestSchema } from "../../lib/schema";
+import { StrategySelect, DecisionDetails } from "../strategy-controls";
 export default function TriagePage() {
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
-  const [result, setResult] = useState<{
-    triage: TriageResult;
-    ticket: { subject: string; body: string };
-  } | null>(null);
+  const [strategy, setStrategy] =
+    useState<import("../../lib/schema").Strategy>("llm");
+  const [result, setResult] = useState<
+    | (import("zod").infer<typeof TriageResponseSchema> & {
+        ticket: { subject: string; body: string };
+      })
+    | null
+  >(null);
   const [loading, setLoading] = useState(false);
   const [explaining, setExplaining] = useState(false);
   const [explanation, setExplanation] = useState("");
@@ -19,14 +24,21 @@ export default function TriagePage() {
     setError("");
     const ticket = { subject, body };
     try {
+      const checked = TriageRequestSchema.safeParse({ ticket, strategy });
+      if (!checked.success)
+        throw new Error(
+          checked.error.issues
+            .map((i) => `${i.path.join(".")}: ${i.message}`)
+            .join("; "),
+        );
       const response = await fetch("/api/triage", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ticket }),
+        body: JSON.stringify({ ticket, strategy }),
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error);
-      setResult({ triage: data.triage, ticket });
+      setResult({ ...TriageResponseSchema.parse(data), ticket });
       setExplanation("");
     } catch (e) {
       setError(
@@ -80,6 +92,11 @@ export default function TriagePage() {
         Classify a ticket and propose the next action for your support team.
       </p>
       <form onSubmit={sendTicket} aria-busy={loading}>
+        <StrategySelect
+          value={strategy}
+          onChange={setStrategy}
+          disabled={loading || explaining}
+        />
         <label htmlFor="subject">Subject</label>
         <input
           id="subject"
@@ -114,6 +131,23 @@ export default function TriagePage() {
       {result && (
         <section className="result" aria-live="polite">
           <h2>Triage result</h2>
+          <p>
+            Strategy: {result.strategy} · Models: {result.models.join(", ")} ·{" "}
+            {result.latency_ms} ms · Cost:{" "}
+            {result.cost_usd === null ? "Unknown" : `$${result.cost_usd}`}
+          </p>
+          {result.text_source === "template" && (
+            <p>
+              Summary and suggested action are templates; the DM only classifies
+              category and priority.
+            </p>
+          )}
+          {result.decision && <DecisionDetails decision={result.decision} />}
+          <p>
+            Tokens — input: {result.usage.input_tokens ?? "Unknown"} · output:{" "}
+            {result.usage.output_tokens ?? "Unknown"} · total:{" "}
+            {result.usage.total_tokens ?? "Unknown"}
+          </p>
           <dl>
             <dt>Category</dt>
             <dd>{result.triage.category}</dd>
@@ -129,7 +163,7 @@ export default function TriagePage() {
             onClick={explain}
             disabled={explaining || loading}
           >
-            {explaining ? "Explaining…" : "Explain"}
+            {explaining ? "Explaining…" : "Explain with LLM"}
           </button>
           <p className="explanation" aria-live="polite">
             {explanation}

@@ -1,5 +1,5 @@
 import { triage } from "../../../lib/triage";
-import { TriageRequestSchema } from "../../../lib/schema";
+import { TriageRequestSchema, TriageResponseSchema } from "../../../lib/schema";
 import { PROMPT_VERSION } from "../../../lib/prompt";
 import { readBody, invalidRequest, errorResponse } from "../../../lib/errors";
 export async function POST(request: Request) {
@@ -10,14 +10,23 @@ export async function POST(request: Request) {
     return invalidRequest();
   }
   const parsed = TriageRequestSchema.safeParse(raw);
-  if (!parsed.success) return invalidRequest();
+  if (!parsed.success)
+    return Response.json(
+      {
+        code: "invalid_request",
+        error: parsed.error.issues
+          .map((i) => `${i.path.join(".")}: ${i.message}`)
+          .join("; "),
+      },
+      { status: 400 },
+    );
   const requestId = crypto.randomUUID();
   try {
     return Response.json(
-      {
-        ...(await triage(parsed.data.ticket, requestId)),
+      TriageResponseSchema.parse({
+        ...(await triage(parsed.data.ticket, requestId, parsed.data.strategy)),
         prompt_version: PROMPT_VERSION,
-      },
+      }),
       { headers: { "X-Request-Id": requestId } },
     );
   } catch (error) {

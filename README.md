@@ -129,11 +129,11 @@ Automated provider tests use a local HTTP stub through the actual OpenAI SDK to 
 
 Both functioning models used triage-v2.1, prompt-only JSON, the same 100 tickets and bounded concurrency of 3. The retired Llama run is failure evidence, not a quality score.
 
-| Model / run evidence                                                                                                  | Valid results | HTTP counts                 | All-ticket category / priority | Successful-only category / priority | Mean latency, all outcomes (ms) | USD     |
-| --------------------------------------------------------------------------------------------------------------------- | ------------- | --------------------------- | ------------------------------ | ----------------------------------- | ------------------------------- | ------- |
-| [meta/llama-3.1-8b-instruct](runs/2026-10-14T10-23-12-130Z-triage-v2.1-meta-llama-3-1-8b-instruct.json)               | 0/100         | {"400":1,"502":99}          | 0.0% / 0.0%                    | Unknown / Unknown                   | 391                             | Unknown |
-| [google/diffusiongemma-26b-a4b-it](runs/2026-10-14T10-25-05-837Z-triage-v2.1-google-diffusiongemma-26b-a4b-it.json)   | 38/100        | {"200":38,"400":1,"429":61} | 37.0% / 29.0%                  | 97.4% / 76.3%                       | 393                             | Unknown |
-| [nvidia/nemotron-3-super-120b-a12b](runs/2026-10-14T10-25-51-428Z-triage-v2.1-nvidia-nemotron-3-super-120b-a12b.json) | 89/100        | {"200":89,"400":1,"429":10} | 80.0% / 60.0%                  | 89.9% / 67.4%                       | 5101                            | Unknown |
+| Model / run evidence                                              | Valid results | HTTP counts                 | All-ticket category / priority | Successful-only category / priority | Mean latency, all outcomes (ms) | USD     |
+| ----------------------------------------------------------------- | ------------- | --------------------------- | ------------------------------ | ----------------------------------- | ------------------------------- | ------- |
+| [meta/llama-3.1-8b-instruct](docs/submission-results.json)        | 0/100         | {"400":1,"502":99}          | 0.0% / 0.0%                    | Unknown / Unknown                   | 391                             | Unknown |
+| [google/diffusiongemma-26b-a4b-it](docs/submission-results.json)  | 38/100        | {"200":38,"400":1,"429":61} | 37.0% / 29.0%                  | 97.4% / 76.3%                       | 393                             | Unknown |
+| [nvidia/nemotron-3-super-120b-a12b](docs/submission-results.json) | 89/100        | {"200":89,"400":1,"429":10} | 80.0% / 60.0%                  | 89.9% / 67.4%                       | 5101                            | Unknown |
 
 Three observed differences:
 
@@ -141,6 +141,32 @@ Three observed differences:
 2. Successful-call mean latency and reported tokens differed: google/diffusiongemma-26b-a4b-it: 958ms, 14019 input / 2917 output tokens reported across the run; nvidia/nemotron-3-super-120b-a12b: 5726ms, 30856 input / 31053 output tokens reported across the run. Fast failed calls explain why all-outcome latency alone is misleading.
 3. The old Llama configuration returned upstream HTTP 410, while Nemotron and DiffusionGemma produced locally validated JSON. Strict-schema capability probes are saved in [provider-capabilities.json](docs/provider-capabilities.json); accepting a schema request does not establish full upstream constraint enforcement.
 
-Task choice: keep Nemotron as the current triage default because it completed more tickets in this run, and explore DiffusionGemma for low-latency drafts subject to human review until throttled repeat runs establish comparable accuracy and availability.
+Historical choice (14 October): Nemotron completed more tickets in that experiment. The final 20 October configuration uses Lightning after the newer availability and compatibility checks documented below.
 
 No hosted cost winner can be established without account-specific prices. Follow-up: rerun sequentially or at a measured sustainable rate after cooldown, then compare matched successful ticket IDs.
+
+## C4 frontend smoke runner (20 October update)
+
+Open `/smoke`, choose the 100-ticket labelled or 500-ticket unlabelled dataset, and enter a random sample size. Sampling is without replacement. Results show every prediction, expected labels and mismatch counts when available, outcomes, mean latency, cost, and model names. Failed labelled tickets count as mismatches. Unlabelled accuracy and unknown pricing remain unavailable rather than being estimated. Runs are saved under `runs/` and appear in `/admin`.
+
+Successful `/api/triage` responses now also contain `model`, `provider`, `usage` (`input_tokens`, `output_tokens`, `total_tokens`), and `cost_usd`; the browser validates the response with Zod. API response model identifiers override configured names after successful provider responses. Failed call logs retain the attempted model name.
+
+The smoke runner currently uses sequential server execution. Keep the page open; large runs require a local server without a short hosting request timeout. C5 integration and verification status are documented honestly in [LLM-DM-report.md](LLM-DM-report.md).
+
+## C5 Decision Model strategies
+
+Set `DECISION_API_KEY`, `DM_BASE_URL=https://decision.vllm-sr.ai`, and `DM_MODEL=vllm-sr/d3-flash` in `.env.local`; obtain the free key at https://decision.vllm-sr.ai/keys. `/triage` and `/smoke` now offer LLM, DM, and DM+LLM. Both API requests accept `strategy: "llm" | "dm" | "dm+llm"` (default: `llm`).
+
+DM mode classifies category/priority and shows validated probabilities/confidence; its summary/action are labelled templates. Hybrid keeps DM labels and uses the LLM for summary/action, failing visibly if either stage fails. Responses additionally include `strategy`, `models`, `decision`, `text_source`, and `latency_ms`. Token totals combine both hybrid stages; call logs and Admin retain per-stage tokens/cost, actual serving models, requested models, provider errors and DM revision metadata.
+
+Run `npm run test:c5:live` against the running app (or set `EVAL_URL`). This makes real API calls, saves smoke runs and writes `docs/c5-live-verification.json`. It reports LLM/hybrid failures separately; completing its checks is not a claim that every strategy succeeded. The free DM provider can log input; use synthetic course tickets only. See [LLM-DM-report.md](LLM-DM-report.md) for genuine results and limitations, including historical Nemotron Super 404 failures.
+
+## Final verified LLM configuration
+
+The selected replacement is `nvidia/nemotron-3.5-lightning-30b-a3b` on the existing NVIDIA endpoint and key. Set `LLM_ENABLE_THINKING=false` to send `chat_template_kwargs.enable_thinking=false`; omitting this optional variable preserves the original provider request format. No prompt or triage contract changes are required. This avoids spending the 1024-token output budget on reasoning. Set both LLM per-million token prices to `0` for NVIDIA's published free hosted endpoint; historical unknown costs remain unknown.
+
+`npm run test:submission:live` checks all three strategies, model/usage logs, both smoke datasets, validation failures and rendered pages against the running server. `npm run test:live` checks chat memory and the explanation SSE protocol, without assuming that HTTP transports deliver one event per network chunk. Evidence is saved under `docs/`. The manual frontend checklist is [docs/FRONTEND-QA.md](docs/FRONTEND-QA.md). Run `python3 scripts/audit-secrets.py` for the read-only credential scan; output contains locations/rules only, never secret values.
+
+## Submission contents
+
+The committed [results summary](docs/submission-results.json) and [LLM-DM report](LLM-DM-report.md) preserve genuine measured results. Raw local `logs/`, `runs/`, verification JSON output and `.env.local` are excluded from Git. The app creates its runtime storage when needed; a fresh clone has no saved local runs. Manual frontend QA is complete and passed, as confirmed by the user; see [the completed checklist](docs/FRONTEND-QA.md).

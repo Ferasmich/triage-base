@@ -1,7 +1,28 @@
 import OpenAI from "openai";
 export class InvalidOutputError extends Error {}
 export class ConfigurationError extends Error {}
+export class DecisionError extends Error {
+  constructor(
+    public status: number,
+    public code: string,
+  ) {
+    super(code);
+  }
+}
 export function safeError(error: unknown) {
+  if (error instanceof DecisionError)
+    return {
+      status: error.status,
+      code: error.code,
+      error:
+        error.code === "dm_timeout"
+          ? "The Decision Model timed out. Please retry."
+          : error.code === "dm_configuration"
+            ? "The Decision Model configuration needs attention."
+            : error.code === "dm_rate_limited"
+              ? "The Decision Model is busy. Please retry later."
+              : "The Decision Model returned an error or invalid output. Please retry.",
+    };
   if (error instanceof InvalidOutputError)
     return {
       status: 502,

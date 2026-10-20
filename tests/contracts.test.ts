@@ -110,3 +110,25 @@ test("accuracy includes failures and tag slices", () => {
   assert.equal(result.cost_usd, null);
   assert.equal(result.slices.adversarial.category_accuracy, 1);
 });
+
+test("smoke requests enforce dataset-specific sample bounds", async () => {
+  const { SmokeRequestSchema } = await import("../lib/schema");
+  for (const sample_size of [0, 101, 1.5])
+    assert.equal(
+      SmokeRequestSchema.safeParse({ dataset: "100", sample_size }).success,
+      false,
+    );
+  assert.equal(
+    SmokeRequestSchema.safeParse({ dataset: "500", sample_size: 500 }).success,
+    true,
+  );
+  const { sample } = await import("../lib/smoke");
+  const original = Array.from({ length: 100 }, (_, i) => i);
+  const chosen = sample(original, 20);
+  assert.equal(chosen.length, 20);
+  assert.equal(new Set(chosen).size, 20);
+  assert.deepEqual(
+    original,
+    Array.from({ length: 100 }, (_, i) => i),
+  );
+});

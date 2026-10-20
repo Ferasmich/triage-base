@@ -14,7 +14,11 @@ export function configuration() {
   if (!baseURL || !apiKey || !model) throw new ConfigurationError();
   const mode = process.env.LLM_OUTPUT_MODE || "prompt";
   if (!["prompt", "json_schema"].includes(mode)) throw new ConfigurationError();
+  const thinking = process.env.LLM_ENABLE_THINKING;
+  if (thinking !== undefined && !["true", "false"].includes(thinking))
+    throw new ConfigurationError();
   return {
+    enableThinking: thinking === undefined ? undefined : thinking === "true",
     baseURL,
     apiKey,
     model,
@@ -44,6 +48,8 @@ export async function complete(
   messages: Messages,
   route: "chat" | "triage",
   requestId?: string,
+  strategy = "llm",
+  fixed?: { category: string; priority: string },
 ) {
   const started = Date.now();
   let attempts = 0;
@@ -51,6 +57,8 @@ export async function complete(
   let output: number | null = 0;
   let status = 200;
   let error_code: string | undefined;
+  let actualModel: string | undefined;
+  let providerStatus: number | undefined;
   let cfg: ReturnType<typeof configuration> | undefined;
   try {
     const connection = client();
@@ -61,6 +69,11 @@ export async function complete(
       try {
         const response = await connection.sdk.chat.completions.create({
           model: cfg.model,
+          ...(cfg.enableThinking === undefined
+            ? {}
+            : {
+                chat_template_kwargs: { enable_thinking: cfg.enableThinking },
+              }),
           messages,
           max_tokens: 1024,
           stream: false,
@@ -78,6 +91,8 @@ export async function complete(
             : {}),
         });
         received = true;
+        actualModel = response.model || undefined;
+        if (!actualModel) throw new InvalidOutputError();
         input =
           response.usage && input !== null
             ? input + response.usage.prompt_tokens
@@ -101,8 +116,30 @@ export async function complete(
           throw new InvalidOutputError();
         }
         const parsed = TriageSchema.safeParse(raw);
-        if (!parsed.success) throw new InvalidOutputError();
-        return { triage: parsed.data };
+        if (
+          !parsed.success ||
+          (fixed &&
+            (parsed.data.category !== fixed.category ||
+              parsed.data.priority !== fixed.priority))
+        )
+          throw new InvalidOutputError();
+        const ip = price("LLM_INPUT_PRICE_PER_MILLION"),
+          op = price("LLM_OUTPUT_PRICE_PER_MILLION");
+        return {
+          triage: parsed.data,
+          model: actualModel,
+          provider: cfg.provider,
+          usage: {
+            input_tokens: input,
+            output_tokens: output,
+            total_tokens:
+              input !== null && output !== null ? input + output : null,
+          },
+          cost_usd:
+            input !== null && output !== null && ip !== null && op !== null
+              ? (input * ip + output * op) / 1e6
+              : null,
+        };
       } catch (error) {
         if (!received) {
           input = null;
@@ -122,6 +159,8 @@ export async function complete(
     }
     throw new InvalidOutputError();
   } catch (error) {
+    providerStatus =
+      error instanceof OpenAI.APIError ? error.status : undefined;
     const mapped = safeError(error);
     status = mapped.status;
     error_code = mapped.code;
@@ -132,12 +171,17 @@ export async function complete(
     await logCall({
       ts: new Date().toISOString(),
       request_id: requestId,
+      strategy,
+      served_model: actualModel ?? null,
+      requested_model: cfg?.model,
+      provider_status: providerStatus,
       route,
       api: "chat_completions",
       prompt_version: route === "triage" ? PROMPT_VERSION : "chat-v1",
       provider: cfg?.provider || "unconfigured",
-      model: cfg?.model || "unconfigured",
+      model: actualModel || cfg?.model || "unconfigured",
       mode: cfg?.mode || "prompt",
+      enable_thinking: cfg?.enableThinking,
       status,
       error_code,
       latency_ms: Date.now() - started,
@@ -164,6 +208,9 @@ export async function explainStream(messages: Messages, signal?: AbortSignal) {
     const stream = await connection.sdk.chat.completions.create(
       {
         model: cfg.model,
+        ...(cfg.enableThinking === undefined
+          ? {}
+          : { chat_template_kwargs: { enable_thinking: cfg.enableThinking } }),
         messages,
         max_tokens: 300,
         stream: true,
@@ -184,6 +231,7 @@ export async function recordStream(
   status: number,
   usage?: { prompt_tokens: number; completion_tokens: number },
   error_code?: string,
+  servedModel?: string,
 ) {
   const ip = price("LLM_INPUT_PRICE_PER_MILLION"),
     op = price("LLM_OUTPUT_PRICE_PER_MILLION");
@@ -193,7 +241,11 @@ export async function recordStream(
     api: "chat_completions",
     prompt_version: "explain-v1",
     provider: cfg?.provider || "unconfigured",
-    model: cfg?.model || "unconfigured",
+    model: servedModel || cfg?.model || "unconfigured",
+    requested_model: cfg?.model,
+    served_model: servedModel ?? null,
+    strategy: "llm",
+    enable_thinking: cfg?.enableThinking,
     mode: "stream",
     status,
     error_code,
